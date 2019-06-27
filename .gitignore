@@ -1,0 +1,33 @@
+# development files
+R/Script_publication.R
+R/Graph modifié.R
+
+# History files
+.Rhistory
+
+# Session Data files
+.RData
+
+# RStudio files
+.Rproj.user/
+
+# produced vignettes
+#vignettes/*.html
+#vignettes/*.pdf
+
+# knitr and R markdown default cache directories
+/*_cache/
+/cache/
+
+# Temporary files created by R markdown
+*.utf8.md
+*.knit.md
+.Rproj.user
+
+# Output data
+*.pdf
+*.csv
+*.html
+
+# System files
+*.DS_Store
