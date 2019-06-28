@@ -18,12 +18,6 @@ LazyData: true
 RoxygenNote: 6.1.1
 Imports:
     readxl,
-    magrittr,
-    dplyr,
-    purrr,
-    plantecophys,
-    reshape2,
-    stringr,
-    data.table
+    tidyverse,
+    plantecophys
 Suggests:
-    tidyverse
