@@ -14,10 +14,8 @@ correct_raci <- function(data, curve) {
   dt <- suppressMessages(read_excel(data$Rapci_file, skip = 14, sheet = "Measurements")) %>%
     select(A, CO2_r, gtc, E, Ca) %>%
     slice(-1) %>%
-    mutate_each(list(as.numeric)) #%>%
-    #as.data.table()
+    mutate_each(list(as.numeric))
 
-  #dt[, deltaA  := c(0, diff(A)), ]
   dt$deltaA <- c(0, diff(dt$A))
 
   dt<- dt %>%
