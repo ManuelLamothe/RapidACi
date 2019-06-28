@@ -70,13 +70,8 @@ Rapid_aci_correction <- function(list_files,
                                                   max_degree = max_degree,
                                                   diagnostic_plot = diagnostic_plot,
                                                   curve_plot = curve_plot)[[1]]$negative
-      # lst[[j+i-1+z]]$lag <- best_coefs(list_files = empty_chamber$path,
-      #                                  delta_max = delta_max,
-      #                                  skip_first = skip_first,
-      #                                  min_CO2 = min_CO2,
-      #                                  max_degree = max_degree)[[1]]$lag
     }
-  z = z + j - 1
+    z = z + j - 1
   }
 
   for(i in 1:length(lst)) {

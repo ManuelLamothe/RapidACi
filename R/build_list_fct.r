@@ -19,7 +19,7 @@
 #'
 #' @examples
 #' 
-#' 
+#' @section TODO: turn off option of using MATCH timestamp
 #' @section TODO: find better pattern
 #' @section TODO: behavior for absence of files
 #' @section TODO: warnings for partial filename pattern match
@@ -35,7 +35,7 @@ build_list <- function(path_to_licor_files = "data/",
   lst_B <- paste0(x, list.files(x, pattern = pattern_for_measure, ignore.case = TRUE))
   lst_AB <- c(lst_A, lst_B)
 
-  df <- tibble(path = lst_AB,
+  df <- tibble(lst_AB,
                chamber = c(rep("EMPTY", length(lst_A)), rep("Measurements", length(lst_B))),
                timestamp = extr_timestamps(lst_AB, match_timestamp_column)) %>%
         arrange(timestamp)

@@ -11,6 +11,7 @@
 #' @return
 #'
 #' @examples
+
 best_coefs <- function(list_files,
                        delta_max,
                        skip_first,
@@ -19,7 +20,6 @@ best_coefs <- function(list_files,
                        diagnostic_plot,
                        curve_plot) {
 
-  source("R/best_fit_fct.r")
   results_p <- vector("list")
 
   for(i in 1:length(list_files)) {
