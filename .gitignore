@@ -1,6 +1,6 @@
 # development files
 R/Script_publication.R
-R/Graph modifié.R
+R/Graph modifi?.R
 
 # History files
 .Rhistory
@@ -10,6 +10,7 @@ R/Graph modifié.R
 
 # RStudio files
 .Rproj.user/
+.Rproj
 
 # produced vignettes
 #vignettes/*.html
