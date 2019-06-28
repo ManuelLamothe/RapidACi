@@ -69,7 +69,7 @@ Rapid_aci_correction <- function(list_files,
                                                   min_CO2 = min_CO2,
                                                   max_degree = max_degree,
                                                   diagnostic_plot = FALSE,
-                                                  curve_plot = FALSE)
+                                                  curve_plot = FALSE)[[1]]$negative
       
       # will be put outside best_coef...
       #diagnostic_plot = diagnostic_plot,

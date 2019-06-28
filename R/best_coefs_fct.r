@@ -49,10 +49,10 @@ best_coefs <- function(list_files,
       mutate(lag_select = ifelse(curve == "negative" &  CO2_r > min_CO2, 1, lag_select)) %>%
       arrange(CO2_r) %>%
       group_by(curve) %>%
-      mutate(n = cumsum(lag_select)) %>%       #tant que la somme cumulée des n est 0, c'est un lag
+      mutate(n = cumsum(lag_select)) %>%
       dplyr::filter(n < 1) %>%
       ungroup() %>%
-      summarise(lag_between_curves = n() + 2)  #compensation pour 1er point neg et pos retirés par dplyr::filter(!is.na(delta))
+      summarise(lag_between_curves = n() + 2) 
 
     if(diagnostic_plot) {
       print(
