@@ -6,6 +6,7 @@
 #' @return
 #'
 #' @examples
+
 correct_raci <- function(data, curve) {
 
   data <- flatten(data)

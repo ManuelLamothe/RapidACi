@@ -18,6 +18,7 @@
 #' @export
 #'
 #' @examples
+
 Rapid_aci_correction <- function(list_files,
                                  delta_max = 0.05,
                                  skip_first = 10,
@@ -25,9 +26,6 @@ Rapid_aci_correction <- function(list_files,
                                  max_degree = 3,
                                  diagnostic_plot = FALSE,
                                  curve_plot = FALSE) {
-
-  source("R/correct_raci_fct.r")
-  source("R/best_coefs_fct.r")
 
   match_timestamps <- unique(list_files[, "timestamp"])
   lst <- rep(list(list()), nrow(dplyr::filter(list_files, chamber != "EMPTY")))

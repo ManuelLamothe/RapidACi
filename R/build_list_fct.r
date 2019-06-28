@@ -18,6 +18,8 @@
 #' @export
 #'
 #' @examples
+#' 
+#' 
 #' @section TODO: find better pattern
 #' @section TODO: behavior for absence of files
 #' @section TODO: warnings for partial filename pattern match
@@ -28,7 +30,6 @@ build_list <- function(path_to_licor_files = "data/",
                        match_timestamp_column = 66) {
 
   x <- path_to_licor_files
-  source("R/extr_timestamps_fct.r")
 
   lst_A <- paste0(x, list.files(x, pattern = pattern_for_empty, ignore.case = TRUE))
   lst_B <- paste0(x, list.files(x, pattern = pattern_for_measure, ignore.case = TRUE))

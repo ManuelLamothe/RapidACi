@@ -5,6 +5,7 @@
 #' @return
 #'
 #' @examples
+
 keep_data <- function(path) {
 
   dt <- suppressMessages(read_excel(path, skip = 14, sheet = "Measurements")) %>%

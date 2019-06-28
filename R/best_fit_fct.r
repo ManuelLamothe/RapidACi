@@ -6,6 +6,7 @@
 #' @return
 #'
 #' @examples
+
 best_fit <- function(data, max_degree = max_degree) {
 
   if(max_degree%%1 != 0 | max_degree < 2 | max_degree > 5) {

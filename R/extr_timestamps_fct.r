@@ -6,6 +6,7 @@
 #' @return
 #'
 #' @examples
+
 extr_timestamps <- function(list_files,
                             match_timestamp_column) {
 
