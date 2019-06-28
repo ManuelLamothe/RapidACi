@@ -41,8 +41,8 @@ correct_raci <- function(data, curve) {
     correction <- (x[[6]]*y$CO2_r^5) + (x[[4]]*y$CO2_r^3) + (x[[3]]*y$CO2_r^2) + (x[[2]]*y$CO2_r) + x[[1]]
   }
 
-  Aleaf <- y$CO2_r - correction
-  ci_corr <- (y$gtc - y$E/2) * (y$Ca - Aleaf) / (y$gtc - y$E/2)
+  Aleaf <- y$A - correction
+  ci_corr <- (((y$gtc - y$E/2) * y$Ca) - Aleaf) / (y$gtc + y$E/2)
 
   out <- list(correction, Aleaf, ci_corr)
   return(out)
