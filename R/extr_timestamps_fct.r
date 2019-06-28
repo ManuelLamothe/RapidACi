@@ -13,7 +13,7 @@ extr_timestamps <- function(list_files,
   timestamps <- .POSIXct(vector("character"))
 
   for(file in list_files) {
-    suppressMessages(x <- read_excel(file, skip = 15, sheet = "Measurements"))
+    suppressMessages(x <- readxl::read_excel(file, skip = 15, sheet = "Measurements"))
     timestamps[file] <- strptime(as.character(x[1, match_timestamp_column]), "%s")
   }
 

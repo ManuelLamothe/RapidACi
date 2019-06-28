@@ -23,8 +23,9 @@ best_coefs <- function(list_files,
   results_p <- vector("list")
 
   for(i in 1:length(list_files)) {
-    suppressMessages(names <- read_excel(list_files[i], skip = 14) %>% names())
-    data_full <- read_excel(list_files[i], skip = 16, col_names = names, sheet = "Measurements")
+    suppressMessages(names <- readxl::read_excel(list_files[i], skip = 14) %>% names())
+    data_full <- readxl::read_excel(list_files[i], skip = 16, col_names = names, 
+                                    sheet = "Measurements")
 
     data <- data_full %>%
       select(CO2_r, A) %>%

@@ -11,7 +11,7 @@ correct_raci <- function(data, curve) {
 
   data <- flatten(data)
 
-  dt <- suppressMessages(read_excel(data$Rapci_file, skip = 14, sheet = "Measurements")) %>%
+  dt <- suppressMessages(readxl::read_excel(data$Rapci_file, skip = 14, sheet = "Measurements")) %>%
     select(A, CO2_r, gtc, E, Ca) %>%
     slice(-1) %>%
     mutate_each(list(as.numeric))
