@@ -68,7 +68,12 @@ Rapid_aci_correction <- function(list_files,
                                                   skip_first = skip_first,
                                                   min_CO2 = min_CO2,
                                                   max_degree = max_degree,
-
+                                                  diagnostic_plot = FALSE,
+                                                  curve_plot = FALSE)
+      
+      # will be put outside best_coef...
+      #diagnostic_plot = diagnostic_plot,
+      #curve_plot = curve_plot)[[1]]$negative
     }
     z = z + j - 1
   }
