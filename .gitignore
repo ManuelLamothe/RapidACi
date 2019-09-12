@@ -32,3 +32,6 @@ R/Graph modifi?.R
 
 # System files
 *.DS_Store
+
+# Test files
+data/*

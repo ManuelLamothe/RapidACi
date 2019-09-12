@@ -1,22 +1,30 @@
 #' extr_timestamps function
 #'
 #' @param list_files
-#' @param match_timestamp_column
+#' @param timestamp_column
+#' @param match_timestamp
 #'
 #' @return
 #'
 #' @examples
 
+
 extr_timestamps <- function(list_files,
-                            match_timestamp_column) {
+                            timestamp_column) {
 
-  timestamps <- .POSIXct(vector("character"))
-
-  for(file in list_files) {
-    suppressMessages(x <- readxl::read_excel(file, skip = 15, sheet = "Measurements"))
-    timestamps[file] <- strptime(as.character(x[1, match_timestamp_column]), "%s")
+  timestamps <- vector("character", length(list_files))
+  range <- paste0(timestamp_column, 17)
+  
+  for(i in 1:length(list_files)) {
+    suppressMessages(x <- readxl::read_excel(list_files[i], range = range, col_names = FALSE))
+    if(length(x) == 0) {
+      timestamps[i] <- NA
+    } else {
+      timestamps[i] <- round(x, digits = 0)
+    }
   }
+  
+  output <- unlist(timestamps)
+  return(output)
 
-  return(timestamps)
 }
-
