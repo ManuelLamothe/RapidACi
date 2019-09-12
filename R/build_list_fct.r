@@ -75,5 +75,8 @@ build_list <- function(path_to_licor_files = "data/",
         select(-nearest) %>%
         arrange(START_time)
   
+  #temporary (for compatibility before modifying Rapid_aci_correction)
+  names(df) <- c(names(df)[1:2], "chamber", names(df)[4], "timestamps", names(df)[6])
+  
   return(df)
 }
