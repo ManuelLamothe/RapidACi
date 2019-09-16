@@ -7,25 +7,25 @@
 #'   empty chamber file will be used.
 #'
 #' @param path_to_licor_files Path where all files are stored
-#' @param pattern_empty Regex pattern that will only match to filenames for empty chamber
+#' @param pattern_empty Regex pattern that must only match filenames for empty chamber
 #'   files
-#' @param pattern_rapid Regex pattern that will only match to filenames for rapid A-Ci
+#' @param pattern_rapid Regex pattern that must only match filenames for rapid A-Ci
 #'   measurement files
-#' @param pattern_slow Regex pattern that will only match to filenames for standard A-Ci
+#' @param pattern_slow Regex pattern that must only match filenames for standard A-Ci
 #'   measurement files
-#' @param pattern_dark Regex pattern that will only match to filenames for dark chamber
-#'   files
+#' @param pattern_dark Regex pattern that must only match filenames for dark chamber files
 #' @param timestamp_column Column index corresponding to the MATCH TIME column in all
 #'   Li-Cor Excel files. By default this corresponds to column BN (index = 66) in Excel
 #'   files.
 #'
-#' @return The function return a dataframe that includes the path to files, the type of
-#'   file and a matching timestamp to an empty chamber file.
+#' @return The function return a dataframe that includes the path to files, the Li-Cor
+#'   system used, the type of measurements, the starting time of the measure, the
+#'   timestamps, and how the timestamp was acquired.
 #' @export
 #'
 #' @examples
 #'
-#' @note TODO: 6400 adaptation
+#' @note TODO: 6400 adaptation to extract START_time and timestamps
 
 build_list <- function(path_to_licor_files = "data/",
                        pattern_empty       = "(mpty).*\\.xls",     
@@ -52,7 +52,7 @@ build_list <- function(path_to_licor_files = "data/",
                   rep("DARK",  length(lst_D))),
       START_time = ifelse(grepl("6400", LiCor_system) == FALSE,
                           extr_timestamps(lst, timestamp_column = "G"), NA),
-      MATCH_timestamp = ifelse(grepl("6400", LiCor_system) == FALSE,
+      timestamp = ifelse(grepl("6400", LiCor_system) == FALSE,
                                extr_timestamps(lst, timestamp_column),  NA),
       MATCH_type = NA,
       nearest = NA)
@@ -66,17 +66,23 @@ build_list <- function(path_to_licor_files = "data/",
                                     "START_time"])
   }
   
+  suppressMessages(
   df <- left_join(select(df, -nearest), fast) %>%
-        mutate(MATCH_type = ifelse(MATCH_timestamp == 0, "closest_time",
-                              ifelse(is.na(MATCH_timestamp), NA, "MATCH")),
-               MATCH_timestamp = ifelse(MATCH_timestamp == 0, nearest, MATCH_timestamp),
-               MATCH_timestamp = ifelse(is.na(MATCH_timestamp), START_time, MATCH_timestamp),
+        mutate(MATCH_type = ifelse(timestamp == 0, "closest_time",
+                              ifelse(is.na(timestamp), NA, "MATCH")),
+               timestamp = ifelse(timestamp == 0, nearest, timestamp),
+               timestamp = ifelse(is.na(timestamp), START_time, timestamp),
                START_time = lubridate::as_datetime(START_time)) %>%
         select(-nearest) %>%
         arrange(START_time)
+  )
   
   #temporary (for compatibility before modifying Rapid_aci_correction)
-  names(df) <- c(names(df)[1:2], "chamber", names(df)[4], "timestamps", names(df)[6])
+  names(df) <- c(names(df)[1:2], "chamber", names(df)[4:6])
+  
+  if(sum(is.na(df$START_time)) > 0 & sum(is.na(df$LiCor_system)) > 0) {
+    warning("Time data cannot be retrieved for some of the files. Makes sure that these files are valid measurement files")
+  }
   
   return(df)
 }

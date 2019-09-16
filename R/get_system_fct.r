@@ -25,8 +25,7 @@ get_system <- function(list_files) {
     } else {
         systems[i] <- str_extract(readxl::read_excel(list_files[i], range = "D3", col_names = FALSE), "\\d+-\\d+")
     }
-  }
-  )
+  })
   
   output <- unlist(systems)
   return(output)
