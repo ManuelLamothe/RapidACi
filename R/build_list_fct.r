@@ -67,7 +67,7 @@ build_list <- function(path_to_licor_files = "data/",
   empty <- dplyr::filter(df, measure == "EMPTY")
   fast  <- dplyr::filter(df, measure == "FAST")
 
-  for(i in seq_along(fast)) {
+  for(i in 1:nrow(fast)) {
     fast$nearest[i] <- unlist(empty[which(abs(empty$START_time - fast$START_time[i]) == 
                                           min(abs(empty$START_time - fast$START_time[i]))), 
                                     "START_time"])
