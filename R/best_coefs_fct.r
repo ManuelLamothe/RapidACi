@@ -5,7 +5,7 @@
 #' @param skip_first
 #' @param min_CO2
 #' @param max_degree
-#' @param diagnostic_plot
+#' @param diagnostic_plots
 #' @param curve_plot
 #'
 #' @return
@@ -17,7 +17,7 @@ best_coefs <- function(list_files,
                        skip_first,
                        min_CO2,
                        max_degree,
-                       diagnostic_plot,
+                       diagnostic_plots,
                        curve_plot) {
 
   results_p <- vector("list")
@@ -25,12 +25,15 @@ best_coefs <- function(list_files,
   for(i in 1:length(list_files)) {
     suppressMessages(names <- readxl::read_excel(list_files[i], skip = 14) %>% names())
     data_full <- readxl::read_excel(list_files[i], skip = 16, col_names = names, 
-                                    sheet = "Measurements")
+                                    sheet = 1)
 
+    
+    ## HERE: if not opened/saved, the cells with formulas will get a value of 0
     data <- data_full %>%
-      select(CO2_r, A) %>%
+      dplyr::select(CO2_r, A) %>%
       dplyr::filter(A > 1 | A < -1) %>%
-      mutate(curve = ifelse(A <= 0, "negative", "positive"), n = 1:n()) %>%
+      mutate(curve = ifelse(A <= 0, "negative", "positive"), 
+             n = 1:n()) %>%
       group_by(curve) %>%
       mutate(delta = A - dplyr::lag(A)) %>%
       mutate(good = ifelse(delta < delta_max & delta >= -delta_max, 1, 0))
@@ -54,7 +57,7 @@ best_coefs <- function(list_files,
       ungroup() %>%
       summarise(lag_between_curves = n() + 2) 
 
-    if(diagnostic_plot) {
+    if(diagnostic_plots) {
       print(
         ggplot(data, aes(x = n, y= delta, group = curve, color = curve)) + geom_point() +
           geom_hline(aes(yintercept = -delta_max)) + geom_hline(aes(yintercept = delta_max)) +
