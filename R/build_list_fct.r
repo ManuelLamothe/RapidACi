@@ -6,7 +6,11 @@
 #'   the Li-Cor MATCH function is not used, the option can be turned off and the closest
 #'   empty chamber file will be used.
 #'
-#' @param path_to_licor_files Path where all files are stored
+#' @param path_to_licor_files Directory path where all files are stored
+#' @param sampleID_format Regex pattern that uniquely identifies the sample ID in
+#'   filenames. For example (default), "[:upper:]{3}_[:digit:]{3}" will extract sample ID
+#'   of the format ABC_123 from a filename like
+#'   "2019-03-20_456_Logdata_ABC_123_Fast_KF.xlsx"
 #' @param pattern_empty Regex pattern that must only match filenames for empty chamber
 #'   files
 #' @param pattern_rapid Regex pattern that must only match filenames for rapid A-Ci
@@ -28,6 +32,7 @@
 #' @note TODO: 6400 adaptation to extract START_time and timestamps
 
 build_list <- function(path_to_licor_files = "data/",
+                       sampleID_format     = "[:upper:]{3}_[:digit:]{3}",
                        pattern_empty       = "(mpty).*\\.xls",     
                        pattern_rapidACi    = "(fast).*\\.xls",
                        pattern_standardACi = "(slow).*\\.xls",
@@ -45,6 +50,8 @@ build_list <- function(path_to_licor_files = "data/",
   df <- 
     tibble(
       path = lst,
+      sample_ID = ifelse(is.na(str_extract(lst, sampleID_format)), "unknown",
+                         str_extract(lst, sampleID_format)),
       LiCor_system = get_system(lst),
       measure = c(rep("EMPTY", length(lst_A)), 
                   rep("FAST",  length(lst_B)),
@@ -76,13 +83,13 @@ build_list <- function(path_to_licor_files = "data/",
         select(-nearest) %>%
         arrange(START_time)
   )
-  
-  #temporary (for compatibility before modifying Rapid_aci_correction)
-  names(df) <- c(names(df)[1:2], "chamber", names(df)[4:6])
-  
+
   if(sum(is.na(df$START_time)) > 0 & sum(is.na(df$LiCor_system)) > 0) {
     warning("Time data cannot be retrieved for some of the files. Makes sure that these files are valid measurement files")
   }
+  
+  #temporary (for compatibility before modifying Rapid_aci_correction)
+  names(df) <- c(names(df)[1:2], "chamber", names(df)[4:7])
   
   return(df)
 }
