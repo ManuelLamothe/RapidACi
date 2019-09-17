@@ -50,7 +50,7 @@ build_list <- function(path_to_licor_files = "data/",
   df <- 
     tibble(
       path = lst,
-      sample_ID = ifelse(is.na(str_extract(lst, sampleID_format)), "unknown",
+      sample_ID = ifelse(is.na(str_extract(lst, sampleID_format)), "none",
                          str_extract(lst, sampleID_format)),
       LiCor_system = get_system(lst),
       measure = c(rep("EMPTY", length(lst_A)), 
@@ -89,7 +89,7 @@ build_list <- function(path_to_licor_files = "data/",
   }
   
   #temporary (for compatibility before modifying Rapid_aci_correction)
-  names(df) <- c(names(df)[1:2], "chamber", names(df)[4:7])
+  names(df) <- c(names(df)[1:3], "chamber", names(df)[5:7])
   
   return(df)
 }

@@ -23,10 +23,12 @@ Rapid_aci_correction <- function(list_files,
                                  skip_first = 10,
                                  min_CO2 = 20,
                                  max_degree = 3,
-                                 diagnostic_plot = FALSE,
+                                 leafArea_df = leafArea,
+                                 diagnostic_plots = FALSE,
                                  curve_plot = FALSE) {
+  #if (!is.null(leafArea_df)) { 
 
-  list_files <- list_files[complete.cases(list_files[ , "START_time"]),]
+  list_files <- list_files[complete.cases(list_files[, "START_time"]),]
   
   match_timestamps <- unique(list_files[, "timestamp"])
   lst <- rep(list(list()), nrow(dplyr::filter(list_files, chamber != "EMPTY")))
@@ -62,39 +64,40 @@ Rapid_aci_correction <- function(list_files,
                                                   skip_first = skip_first,
                                                   min_CO2 = min_CO2,
                                                   max_degree = max_degree,
-                                                  diagnostic_plot = diagnostic_plot,
+                                                  diagnostic_plots = diagnostic_plots,
                                                   curve_plot = curve_plot)[[1]]$positive
       lst[[j+i-1+z]]$negCurve_coefs <- best_coefs(list_files = empty_chamber$path,
                                                   delta_max = delta_max,
                                                   skip_first = skip_first,
                                                   min_CO2 = min_CO2,
                                                   max_degree = max_degree,
-                                                  diagnostic_plot = FALSE,
+                                                  diagnostic_plots = FALSE,
                                                   curve_plot = FALSE)[[1]]$negative
       
       # will be put outside best_coef...
       #diagnostic_plot = diagnostic_plot,
-      #curve_plot = curve_plot)[[1]]$negative
     }
     z = z + j - 1
   }
 
-  for(i in 1:length(lst)) {
-    if(!is.na(lst[[i]]$posCurve_coefs)) {
+  for(i in seq_along(lst)) {
+
+    if(sum(is.na(lst[[i]]$posCurve_coefs)) > 0) {
+      lst[[i]]$posCurve_correction <- lst[[i]]$posCurve_Aleaf <- lst[[i]]$posCurve_ci_corrected <- NA
+    } else {    
       x <- correct_raci(lst[i], "positive")
       lst[[i]]$posCurve_correction <- x[1]
       lst[[i]]$posCurve_Aleaf <- x[2]
       lst[[i]]$posCurve_ci_corrected <- x[3]
-    } else {
-      lst[[i]]$posCurve_correction <- lst[[i]]$posCurve_Aleaf <- lst[[i]]$posCurve_ci_corrected <- NA
     }
-    if(!is.na(lst[[i]]$negCurve_coefs)) {
+
+    if(sum(is.na(lst[[i]]$negCurve_coefs)) > 0) {
+      lst[[i]]$negCurve_correction <- lst[[i]]$negCurve_Aleaf <- lst[[i]]$negCurve_ci_corrected <- NA
+    } else {      
       x <- correct_raci(lst[i], "negative")
       lst[[i]]$negCurve_correction <- x[1]
       lst[[i]]$negCurve_Aleaf <- x[2]
       lst[[i]]$negCurve_ci_corrected <- x[3]
-    } else {
-      lst[[i]]$negCurve_correction <- lst[[i]]$negCurve_Aleaf <- lst[[i]]$negCurve_ci_corrected <- NA
     }
   }
 
