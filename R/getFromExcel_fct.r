@@ -10,7 +10,7 @@
 
 getFromExcel <- function(filepath, 
                          leafArea_cm2 = NA,
-                         variables = c("GasEx_A", "GasEx_Ci", "GasEx_gtc", 
+                         variables = c("GasEx_A", "GasEx_Ci", "GasEx_gtc", "GasEx_gsw",
                                        "GasEx_TleafCnd","Meas_CO2_r", "Meas_Tleaf", 
                                        "Meas_Tleaf2", "Meas_Qamb_in", "Const_S")) {
 
