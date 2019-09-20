@@ -5,33 +5,39 @@
 \title{build_list function}
 \usage{
 build_list(path_to_licor_files = "data/",
+  sampleID_format = "[:upper:]{3}_[:digit:]{3}",
   pattern_empty = "(mpty).*\\\\.xls",
   pattern_rapidACi = "(fast).*\\\\.xls",
   pattern_standardACi = "(slow).*\\\\.xls",
   pattern_dark = "(dark).*\\\\.xls", timestamp_column = "BN")
 }
 \arguments{
-\item{path_to_licor_files}{Path where all files are stored}
+\item{path_to_licor_files}{Directory path where all files are stored}
 
-\item{pattern_empty}{Regex pattern that will only match to filenames for empty chamber
+\item{sampleID_format}{Regex pattern that uniquely identifies the sample ID in
+filenames. For example (default), "[:upper:]{3}_[:digit:]{3}" will extract sample ID
+of the format ABC_123 from a filename like
+"2019-03-20_456_Logdata_ABC_123_Fast_KF.xlsx"}
+
+\item{pattern_empty}{Regex pattern that must only match filenames for empty chamber
 files}
 
-\item{pattern_dark}{Regex pattern that will only match to filenames for dark chamber
-files}
+\item{pattern_dark}{Regex pattern that must only match filenames for dark chamber files}
 
 \item{timestamp_column}{Column index corresponding to the MATCH TIME column in all
 Li-Cor Excel files. By default this corresponds to column BN (index = 66) in Excel
 files.}
 
-\item{pattern_rapid}{Regex pattern that will only match to filenames for rapid A-Ci
+\item{pattern_rapid}{Regex pattern that must only match filenames for rapid A-Ci
 measurement files}
 
-\item{pattern_slow}{Regex pattern that will only match to filenames for standard A-Ci
+\item{pattern_slow}{Regex pattern that must only match filenames for standard A-Ci
 measurement files}
 }
 \value{
-The function return a dataframe that includes the path to files, the type of
-  file and a matching timestamp to an empty chamber file.
+The function return a dataframe that includes the path to files, the Li-Cor
+  system used, the type of measurements, the starting time of the measure, the
+  timestamps, and how the timestamp was acquired.
 }
 \description{
 Generates a list of the files present in a specified directory. By
@@ -41,7 +47,7 @@ Generates a list of the files present in a specified directory. By
   empty chamber file will be used.
 }
 \note{
-TODO: 6400 adaptation
+TODO: 6400 adaptation to extract START_time and timestamps
 }
 \examples{
 

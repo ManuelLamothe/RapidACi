@@ -7,10 +7,11 @@
 extr_timestamps(list_files, timestamp_column)
 }
 \arguments{
-\item{match_timestamp}{}
+\item{timestamp_column}{}
 }
 \value{
-
+Return file timestamp as read in Excel files produced by the LI-Cor portable
+  photosynthesis systems.
 }
 \description{
 extr_timestamps function
