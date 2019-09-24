@@ -7,7 +7,7 @@
 #'
 #' @return tree_Id list with date and leaf area
 #' 
-#' @example 
+#' @examples 
 #' \dontrun{
 #' # Merging multiple files
 #' leafArea_df <- NULL

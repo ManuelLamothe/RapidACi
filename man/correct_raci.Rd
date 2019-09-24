@@ -7,10 +7,12 @@
 correct_raci(data, curve)
 }
 \arguments{
-\item{curve}{}
+\item{data}{The umpteenth element of the list under construction}
+
+\item{curve}{Portion of the curve to use (either "positive" or "negative")}
 }
 \value{
-
+The correction factor used, the A corrected (Aleaf) and the Ci corrected
 }
 \description{
 Correct_raci function

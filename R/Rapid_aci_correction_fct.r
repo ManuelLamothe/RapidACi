@@ -28,8 +28,7 @@
 #'   parameters used for the correction.
 #'
 #' @export
-#'
-#' @examples
+
 
 Rapid_aci_correction <- function(list_files,
                                  leafArea_df = NULL,

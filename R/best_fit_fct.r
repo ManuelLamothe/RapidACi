@@ -1,9 +1,9 @@
 #' best_fit function
 #'
-#' @param data
-#' @param max_degree
+#' @param data Data points to fit the 
+#' @param max_degree Inherited argument from Rapid_aci_correction function
 #'
-#' @return
+#' @return The list of coefficients of the best fitted curve
 
 
 best_fit <- function(data, max_degree) {

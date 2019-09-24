@@ -1,16 +1,15 @@
 #' best_coefs function
 #'
-#' @param empty_file
-#' @param leafArea_cm2
-#' @param delta_max
-#' @param skip_first
-#' @param min_CO2
-#' @param max_degree
-#' @param diagnostic_plots
+#' @param empty_file Inherited argument from Rapid_aci_correction function
+#' @param leafArea_cm2 Leaf area in cm2
+#' @param delta_max Inherited argument from Rapid_aci_correction function
+#' @param skip_first Inherited argument from Rapid_aci_correction function
+#' @param min_CO2 Inherited argument from Rapid_aci_correction function
+#' @param max_degree Inherited argument from Rapid_aci_correction function
+#' @param diagnostic_plots Inherited argument from Rapid_aci_correction function
 #'
-#' @return
+#' @return Coefficients from the best 
 #'
-
 
 best_coefs <- function(empty_file,
                        leafArea_cm2,

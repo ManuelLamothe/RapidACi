@@ -7,7 +7,9 @@
 extr_timestamps(list_files, timestamp_column)
 }
 \arguments{
-\item{timestamp_column}{}
+\item{list_files}{Inherited argument from Rapid_aci_correction function}
+
+\item{timestamp_column}{Inherited argument from Rapid_aci_correction function}
 }
 \value{
 Return file timestamp as read in Excel files produced by the LI-Cor portable

@@ -1,7 +1,7 @@
 #' extr_timestamps function
 #'
-#' @param list_files
-#' @param timestamp_column
+#' @param list_files Inherited argument from Rapid_aci_correction function
+#' @param timestamp_column Inherited argument from Rapid_aci_correction function 
 #'
 #' @return Return file timestamp as read in Excel files produced by the LI-Cor portable
 #'   photosynthesis systems.
@@ -24,5 +24,4 @@ extr_timestamps <- function(list_files,
   
   output <- unlist(timestamps)
   return(output)
-
 }

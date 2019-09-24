@@ -1,27 +1,12 @@
 #' Correct_raci function
 #'
-#' @param data
-#' @param curve
+#' @param data The umpteenth element of the list under construction
+#' @param curve Portion of the curve to use (either "positive" or "negative")
 #'
-#' @return
-#'
-#' @examples
+#' @return The correction factor used, the A corrected (Aleaf) and the Ci corrected
+
 
 correct_raci <- function(data, curve) {
-
-  # dt <- suppressMessages(
-  #       readxl::read_excel(data$ACi_file, skip = 14, sheet = 1)
-  #       ) %>%
-  #         select(A, CO2_r, gtc, E, Ca) %>%
-  #         slice(-1) %>%
-  #         mutate_each(list(as.numeric)
-  #       )
-  # 
-  # dt$deltaA <- c(0, diff(dt$A))
-  # 
-  # dt<- dt %>%
-  #      mutate(n = 1:n(), positif = ifelse(deltaA > 0, TRUE, FALSE)) %>%
-  #      split(.$positif)
 
   if(curve == "positive") {x <- data$posCurve_coefs; y <- dplyr::filter(data$ACi_data, directn == "positive")}
   if(curve == "negative") {x <- data$negCurve_coefs; y <- dplyr::filter(data$ACi_data, directn == "negative")}

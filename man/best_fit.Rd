@@ -7,7 +7,12 @@
 best_fit(data, max_degree)
 }
 \arguments{
-\item{max_degree}{}
+\item{data}{Data points to fit the}
+
+\item{max_degree}{Inherited argument from Rapid_aci_correction function}
+}
+\value{
+The list of coefficients of the best fitted curve
 }
 \description{
 best_fit function
