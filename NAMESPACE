@@ -2,3 +2,5 @@
 
 export(Rapid_aci_correction)
 export(build_list)
+export(extr_aci)
+export(getFromExcel)

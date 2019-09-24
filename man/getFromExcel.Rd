@@ -2,22 +2,27 @@
 % Please edit documentation in R/getFromExcel_fct.r
 \name{getFromExcel}
 \alias{getFromExcel}
-\title{best_coefs function}
+\title{getFromExcel function}
 \usage{
 getFromExcel(filepath, leafArea_cm2 = NA, variables = c("GasEx_A",
   "GasEx_Ci", "GasEx_gtc", "GasEx_gsw", "GasEx_TleafCnd", "Meas_CO2_r",
-  "Meas_Tleaf", "Meas_Tleaf2", "Meas_Qamb_in", "Const_S"))
+  "Meas_Tleaf", "Meas_Tleaf2", "Meas_Qamb_in", "Const_S"),
+  show.variables.names = FALSE)
 }
 \arguments{
 \item{filepath}{Path to an Excel file produce by a Li-Cor system 6800}
 
-\item{leafArea_cm2}{Numeric value of the leaf area in the chamber (default = NA, i.e. no correction is applied)}
+\item{leafArea_cm2}{Numeric value of the leaf area in the chamber (default = NA, i.e.
+no correction is applied)}
 
 \item{variables}{The list of variables to retrieve from the file}
+
+\item{show.variables.names}{Logical argument to print the entire listof variable names
+to console (default = FALSE)}
 }
 \value{
-
+A subset dataframe with the variables given in arguments
 }
 \description{
-best_coefs function
+getFromExcel function
 }
