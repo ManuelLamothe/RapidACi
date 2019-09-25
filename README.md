@@ -105,8 +105,8 @@ t(bind_rows(map(X, ~ .x$pars[1,1:2]),map(X, ~ .x$pars[2,1:2]))) %>%
     set_names(c("Vcmax_estimate", "Vcmax_Std. Error", "Jmax_estimate", "Jmax_Std. Error"))
 
 ### See all variables names in an Excel file
-get_fromExcel(list_files[1]$path[1], variables = NA, show.variables = TRUE)
+getFromExcel(list_files[1]$path[1], variables = NA, show.variables = TRUE)
 
 ### see the results of modifying leaf area 
-head(get_fromExcel(6800file))
-head(get_fromExcel(6800file, leafArea_cm2 = 7))
+head(getFromExcel(6800file))
+head(getFromExcel(6800file, leafArea_cm2 = 7))

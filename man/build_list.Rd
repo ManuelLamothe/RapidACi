@@ -5,22 +5,23 @@
 \title{build_list function}
 \usage{
 build_list(path_to_licor_files = "data/",
-  sampleID_format = "[:upper:]{3}_[:digit:]{3}",
   pattern_empty = "(mpty).*\\\\.xls",
   pattern_rapidACi = "(fast).*\\\\.xls",
-  pattern_standardACi = "(slow).*\\\\.xls", timestamp_column = "BN",
-  leafArea_df = NULL, dark_df = NULL)
+  pattern_standardACi = "(slow).*\\\\.xls",
+  pattern_dark = "(dark).*\\\\.xls",
+  sampleID_format = "[:upper:]{3}_[:digit:]{3}",
+  timestamp_column = "BN", leafArea_df = NULL)
 }
 \arguments{
 \item{path_to_licor_files}{Directory path where all files are stored}
+
+\item{pattern_empty}{Regex pattern that must only match filenames for empty chamber
+files}
 
 \item{sampleID_format}{Regex pattern that uniquely identifies the sample ID in
 filenames. For example (default), "[:upper:]{3}_[:digit:]{3}" will extract sample ID
 of the format ABC_123 from a filename like
 "2019-03-20_456_Logdata_ABC_123_Fast_KF.xlsx"}
-
-\item{pattern_empty}{Regex pattern that must only match filenames for empty chamber
-files}
 
 \item{timestamp_column}{Column index corresponding to the MATCH TIME column in all
 Li-Cor Excel files. By default this corresponds to column BN (index = 66) in Excel
