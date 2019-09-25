@@ -34,20 +34,21 @@
 #' @note TODO: 6400 adaptation to extract START_time and timestamps
 
 build_list <- function(path_to_licor_files = "data/",
-                       sampleID_format     = "[:upper:]{3}_[:digit:]{3}",
                        pattern_empty       = "(mpty).*\\.xls",     
                        pattern_rapidACi    = "(fast).*\\.xls",
                        pattern_standardACi = "(slow).*\\.xls",
+                       pattern_dark        = "(dark).*\\.xls",
+                       sampleID_format     = "[:upper:]{3}_[:digit:]{3}",
                        timestamp_column    = "BN",
-                       leafArea_df         = NULL,
-                       dark_df             = NULL) {
+                       leafArea_df         =  NULL) {
 
   x <- path_to_licor_files
 
   lst_A <- list.files(x, pattern = pattern_empty, ignore.case = TRUE)
   lst_B <- list.files(x, pattern = pattern_rapidACi, ignore.case = TRUE)
   lst_C <- list.files(x, pattern = pattern_standardACi, ignore.case = TRUE)
-  lst <- paste0(x, c(lst_A, lst_B, lst_C))
+  lst_D <- list.files(x, pattern = pattern_dark, ignore.case = TRUE)
+  lst <- paste0(x, c(lst_A, lst_B, lst_C, lst_D))
 
   df <- 
     tibble(
@@ -57,7 +58,8 @@ build_list <- function(path_to_licor_files = "data/",
       LiCor_system = get_system(lst),
       chamber = c(rep("EMPTY", length(lst_A)), 
                   rep("FAST",  length(lst_B)),
-                  rep("SLOW",  length(lst_C))), 
+                  rep("SLOW",  length(lst_C)),
+                  rep("DARK",  length(lst_D))), 
       START_time = ifelse(grepl("6400", LiCor_system) == FALSE,
                           extr_timestamps(lst, timestamp_column = "G"), NA),
       timestamp = ifelse(grepl("6400", LiCor_system) == FALSE,
@@ -92,10 +94,6 @@ build_list <- function(path_to_licor_files = "data/",
   # If dataframe for leaf area is provided...
   if (is.null(leafArea_df)) {df$leafArea_mm2 <- NA
   } else {df <- left_join(df, select(leafArea_df, sample_ID, "leafArea_mm2"))}
-  
-  # If dataframe with respiration measurement is provided...
-  if (is.null(dark_df)) {df$Rd <- NA
-  } else {df <- left_join(df, select(dark_df, sample_ID, Rd = "Photo"))}
 
   return(df)
 }
