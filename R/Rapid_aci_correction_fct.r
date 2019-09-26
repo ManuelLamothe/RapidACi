@@ -110,7 +110,7 @@ Rapid_aci_correction <- function(list_files,
                                          directn = ifelse(deltaA > 0, "positive", "negative"))
       lst[[j+i-1+z]]$empty_chamber_file <- empty_chamber$path
       lst[[j+i-1+z]]$empty_chamber_data <- xx[[1]]$empty_data
-      lst[[j+i-1+z]]$lag_between_curves <- xx[[1]]$lag
+      #lst[[j+i-1+z]]$lag_between_curves <- xx[[1]]$lag
       lst[[j+i-1+z]]$posCurve_coefs <- xx[[1]]$positive
       lst[[j+i-1+z]]$negCurve_coefs <- xx[[1]]$negative
     }

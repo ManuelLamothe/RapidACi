@@ -8,9 +8,13 @@
 
 correct_raci <- function(data, curve) {
 
-  if(curve == "positive") {x <- data$posCurve_coefs; y <- dplyr::filter(data$ACi_data, directn == "positive")}
-  if(curve == "negative") {x <- data$negCurve_coefs; y <- dplyr::filter(data$ACi_data, directn == "negative")}
+#   if(curve == "positive") {x <- data$posCurve_coefs; y <- dplyr::filter(data$ACi_data, directn == "positive")}
+#   if(curve == "negative") {x <- data$negCurve_coefs; y <- dplyr::filter(data$ACi_data, directn == "negative")}
 
+  if(curve == "positive") x <- data$posCurve_coefs
+  if(curve == "negative") x <- data$negCurve_coefs
+  y <- data$ACi_data
+  
   if (length(x) == 2) {
     correction <- (x[[2]]*y$Meas_CO2_r) + x[[1]]
 

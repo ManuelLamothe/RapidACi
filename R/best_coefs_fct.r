@@ -12,7 +12,7 @@
 #'
 
 best_coefs <- function(empty_file,
-                       leafArea_cm2,
+                       leafArea_cm2 = NA,
                        delta_max,
                        skip_first,
                        min_CO2,
@@ -25,20 +25,11 @@ best_coefs <- function(empty_file,
   
   # Each empty chamber file has its values recalculated after leaf area value (Const_S) is 
   # modified
-  if (!is.na(leafArea_cm2)) { 
-    df <- getFromExcel(empty_file, leafArea_cm2 = leafArea_cm2,
-                       variables = c("GasEx_A", "GasEx_Ci", "GasEx_gtc", "GasEx_gsw", 
-                                     "GasEx_TleafCnd", "Meas_CO2_r", "Meas_Tleaf", 
-                                     "Meas_Tleaf2", "Meas_Qamb_in"))
-    
-  # No correction needed to Const_S values
-  } else {
-    df <- getFromExcel(empty_file, leafArea_cm2 = NA,
-                       variables = c("GasEx_A", "GasEx_Ci", "GasEx_gtc", "GasEx_gsw", 
-                                     "GasEx_TleafCnd", "Meas_CO2_r", "Meas_Tleaf", 
-                                     "Meas_Tleaf2", "Meas_Qamb_in"))
-  }
 
+  df <- getFromExcel(empty_file, leafArea_cm2 = leafArea_cm2,
+                     variables = c("GasEx_A", "GasEx_Ci", "GasEx_gtc", "GasEx_gsw", 
+                                   "GasEx_TleafCnd", "Meas_CO2_r", "Meas_Tleaf", 
+                                   "Meas_Tleaf2", "Meas_Qamb_in"))
   
   # SECTION 2 : GETTING THE COEFS OF BEST FITTING CURVE
   #####################################################
@@ -86,7 +77,7 @@ best_coefs <- function(empty_file,
     results_p[[empty_file]]$negative <- best_fit(neg, max_degree)
   }
     
-  results_p[[empty_file]]$empty_data <- df
+  results_p[[empty_file]]$empty_data <- data
   #results_p[[empty_file]]$lag  <- data_lag$lag_between_curves
   return(results_p)
     
