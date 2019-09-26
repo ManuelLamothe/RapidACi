@@ -16,10 +16,9 @@ IMPORTANT: the actual version is not yet adapted for files produced by the LI640
 if(!require("devtools")) install.packages("devtools")    
 devtools::install_github("ManuelLamothe/RapidACi")     
 ```
-The package also needs the following packages: tidyverse, XLConnect, readxl, and plantecophys. 
+The package also needs the following packages: tidyverse, XLConnect, and plantecophys. 
 
 ```{r}
-if (!require("readxl")) install.packages("readxl"); library(readxl)
 if (!require("tidyverse")) install.packages("tidyverse"); library(tidyverse)
 if (!require("XLConnect")) install.packages("XLConnect"); library(XLConnect)
 if (!require("plantecophys")) install.packages("plantecophys"); library(plantecophys)
@@ -66,24 +65,30 @@ results <- Rapid_aci_correction(list_files,
                                 diagnostic_plots = FALSE)
 ```
 
-### 3. Calculate Vcmax and Jmax
+### 3. Calculate Vcmax and Jmax 
 
 The plantecophys package by [Duursma (2015)](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0143346) to calculate Vcmax and Jmax for each samples. The option `*useRd* = TRUE` let you use your own measures of respiration (missing values will be estimated).
 
 ```{r}
 # Since not all samples can be analysed by plantecophys we recommand to launch the function with the *safely* function from the purrr package that produce a list of separated `result` and `error` without stopping the process
 
-X <- Raci %>%
-     purrr::map(safely(~plantecophys::fitaci(., useRd=TRUE))) %>% 
-     map("result") %>% 
-     compact()
-
+X <- extr_aci(results) %>%
+     purrr::map(safely(~plantecophys::fitaci(., useRd=TRUE, Tcorrect=FALSE)))
+     
 # to generate plots
-walk(X, plot)     
+map(X, "result") %>% compact() %>% walk(plot)     
 
 # to see errors
 map(X, "error") %>% compact() 
-     
+
+# Vcmax-Jmax by samples
+Y <- map(X, "result") %>% compact()
+y <- names(Y)
+
+df <- cbind(sample_ID = as.character(lapply(y, rep, 3) %>% flatten()),
+            estimates = rep(c("Vcmax", "Jmax", "Rd"), length(Y)),
+            value     = do.call("rbind", map(Y, "pars")) %>% as_tibble())
+
 ```
 
 ### EXAMPLES (in construction)
@@ -100,13 +105,6 @@ identical(map(X, ~ .x$pars[1,1]), map2(X, "pars", c(2,1)))
 
 bind_cols(names(X)), ...    %>% set_names(c("sample_ID", ...)
 
-t(bind_rows(map(X, ~ .x$pars[1,1:2]),map(X, ~ .x$pars[2,1:2]))) %>% 
-    as_tibble() %>% 
-    set_names(c("Vcmax_estimate", "Vcmax_Std. Error", "Jmax_estimate", "Jmax_Std. Error"))
-
 ### See all variables names in an Excel file
 getFromExcel(list_files[1]$path[1], variables = NA, show.variables = TRUE)
 
-### see the results of modifying leaf area 
-head(getFromExcel(6800file))
-head(getFromExcel(6800file, leafArea_cm2 = 7))
