@@ -6,12 +6,12 @@
 #' @export
 #'
 #' 
- 
-diagnose_sample(results2, "SAB_513")
-delta_max = 0.05
-sample_name = "SAB_513"
-par(mfrow = c(2,2))
-results <- result_list
+#  
+# diagnose_sample(results2, "SAB_513")
+# delta_max = 0.05
+# sample_name = "SAB_513"
+# par(mfrow = c(2,2))
+# results <- result_list
 
 
 diagnose_sample <- function(results, sample_name){
