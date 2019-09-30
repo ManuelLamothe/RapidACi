@@ -33,6 +33,5 @@ Imports:
     magrittr,
     ggplot2
 Suggests:
-    tidyverse,
     plantecophys
 
