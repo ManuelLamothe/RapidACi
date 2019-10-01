@@ -30,8 +30,8 @@ correct_raci <- function(data, curve) {
                    + (x[[2]]*y$Meas_CO2_r) + x[[1]]
 
   } else if  (length(x) == 6) {
-    correction <- (x[[6]]*y$Meas_CO2_r^5) + (x[[4]]*y$Meas_CO2_r^3) + (x[[3]]*y$Meas_CO2_r^2) 
-                   + (x[[2]]*y$Meas_CO2_r) + x[[1]]
+    correction <- (x[[6]]*y$Meas_CO2_r^5) + (x[[5]]*y$Meas_CO2_r^4) + (x[[4]]*y$Meas_CO2_r^3) 
+                   + (x[[3]]*y$Meas_CO2_r^2) + (x[[2]]*y$Meas_CO2_r) + x[[1]]
   }
 
   Aleaf <- y$GasEx_A - correction
