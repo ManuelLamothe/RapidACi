@@ -56,7 +56,7 @@ Rapid_aci_correction <- function(list_files,
 
   # Files with no START_time are more than likely useless for the rest of analysis
   list_files <- list_files[complete.cases(list_files[, "START_time"]),]
-  message("\nThe following list files is being processed :\n")
+  message("\nThe following list of files is being processed :\n")
   list_files %>% print(n = Inf)
   
   # Initialization of results list 
@@ -142,7 +142,7 @@ Rapid_aci_correction <- function(list_files,
         lst[[i]]$correction_curve_used <- "negative"
         lst[[i]]$correction_factor <- x[1]
         lst[[i]]$Aleaf <- x[2]
-        lst[[i]]$Ci_corrected <- x[3]  
+        lst[[i]]$Ci_corrected <- x[3] 
       } else if(sum(is.na(lst[[i]]$posCurve_coefs)) == 0) {
         x <- correct_raci(lst[[i]], "positive")
         lst[[i]]$correction_curve_used <- "positive"
@@ -155,8 +155,16 @@ Rapid_aci_correction <- function(list_files,
     } else {
       stop("Priority_curve argument is incorrect, it only takes one of 'positive' or 'negative' as value")
     }
-  }      
-
+  } 
+  
+  for(i in seq_along(lst)) {
+    
+    lst[[i]]$Raci <- bind_cols(lst[[i]]$ACi_data, lst[[i]]$Aleaf, lst[[i]]$Ci_corrected) %>%
+      select(Photo = V1, Ci = V2, Tleaf = Meas_Tleaf, PARi = Meas_Qamb_in, everything()) %>%
+      dplyr::filter(deltaA > 0 & deltaCi >= 0 & Ci >= 0) %>%
+      mutate(Rd = lst[[i]]$Rd)
+  }
+  
   names(lst) <- lapply(lst, `[[`, 1)
   return(lst)
 }

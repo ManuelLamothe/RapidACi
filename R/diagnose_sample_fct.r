@@ -6,80 +6,73 @@
 #' @export
 #'
 #' 
-#  
-# diagnose_sample(results2, "SAB_513")
-# delta_max = 0.05
-# sample_name = "SAB_513"
-# par(mfrow = c(2,2))
-# results <- result_list
 
 
-diagnose_sample <- function(results, sample_name){
+diagnose_sample <- function(results, sample_name, delta_max){
 
-  data <- results[[sample_name]]
+ data <- results[[sample_name]]
 
- raw1 <- 
-    ggplot(data$ACi_data, aes(GasEx_Ci, GasEx_A, color = directn)) +
-      geom_point() +
-      labs(title = paste("Raw A-Ci :", sample_name)) +
-      theme(legend.position = "right")
-  
- raw2 <- 
-    ggplot(data$ACi_data, aes(Meas_CO2_r, GasEx_A, color = directn)) +
-      geom_point() +
-      labs(title = paste("Raw A-Ci :", sample_name)) +
-      theme(legend.position = "right")
-    
- raw3 <-     
-    ggplot(data$ACi_data, aes(x = n, y= deltaA, color = directn)) + 
+ empty1 <-     
+    ggplot(data$empty_chamber_data, aes(x = n, y= delta, color = curve)) + 
       geom_point() +
       geom_hline(aes(yintercept = -delta_max)) + 
       geom_hline(aes(yintercept =  delta_max)) +
-      labs(title = paste("Selected points (delta_max =", delta_max, ")")) +
+      labs(title = paste("Stable selected empty curve (delta_max =", delta_max, ")")) +
       theme(legend.position = "none")
     
- empty1 <-
+ empty2 <-
     ggplot(data$empty_chamber_data, aes(x = Meas_CO2_r, y = GasEx_A, color = good)) + 
       geom_point() +
       labs(title = paste("Portion of the empty chamber curve used (in blue)")) +
       theme(legend.position = "none")
-    
-    
-    
-    
-    
-    
-    
- # # Empty2
- #    deg <- length(dplyr::filter(data, directn == "positive")) - 1
- #    if(deg > 0){
- #      if(deg==1){oi<-"st"}else if(deg==2){oi<-"nd"}else if(deg==3){oi<-"rd"}else{oi<-"th"}
- #      p3 <-
- #        ggplot(pos, aes(x = Meas_CO2_r, y = GasEx_A)) + 
- #        geom_point() +
- #        geom_smooth(method='lm',formula = y~x + poly(x, deg), color = "green2", se = FALSE) +
- #        labs(title = paste("Best fitting on positive curve :", paste0(deg, oi), "degree"))
- #    } else {p3 <- NULL}
- #    
- #  # Empty3
- #    dog <- length(results_p[[1]]$negative) - 1
- #    if(dog > 0){
- #      if(dog==1){oi<-"st"}else if(dog==2){oi<-"nd"}else if(dog==3){oi<-"rd"}else{oi<-"th"}
- #      p4 <-
- #        ggplot(neg, aes(x = Meas_CO2_r, y = GasEx_A)) + 
- #        geom_point() +
- #        geom_smooth(method='lm',formula=y~x + poly(x, dog), color = "green1", se = FALSE) +
- #        labs(title = paste("Best fitting on negative curve :", paste0(dog, oi), "degree"))
- #    } else {p4 <- NULL}  
-    
- # Corr1
-    
- # Corr2
+ 
+ deg <- length(data$posCurve_coefs) 
+    if(deg > 0){
+      if(deg==2){oi<-"st"}else if(deg==3){oi<-"nd"}else if(deg==4){oi<-"rd"}else{oi<-"th"}
+      empty3 <- 
+        ggplot(dplyr::filter(data$empty_chamber_data, good == 1), aes(x = Meas_CO2_r, y = GasEx_A)) + 
+          geom_point() +
+          geom_smooth(method='lm',formula = y~x + poly(x, deg), color = "green2", se = FALSE) +
+          labs(title = paste("Best fitting on positive curve :", paste0(deg-1, oi), "degree"))
+    } else {
+      deg <- length(data$negCurve_coefs)
+      if(deg > 0){
+        if(deg==2){oi<-"st"}else if(deg==3){oi<-"nd"}else if(deg==4){oi<-"rd"}else{oi<-"th"}
+      empty3 <-
+        ggplot(data$empty_chamber_data, aes(x = Meas_CO2_r, y = GasEx_A, color = as.factor(good))) + 
+          geom_point() +
+          geom_smooth(method='lm',formula=y~x + poly(x, deg), color = "green1", se = FALSE) +
+          labs(title = paste("Best fitting on negative curve :", paste0(deg-1, oi), "degree"))
+      }
+    }
 
-  plist <- c(raw1, raw2, raw3, empty1)
-  png(sample_name)
-  gridExtra::grid.arrange(grobs = plist[-which(sapply(plist, is.null))],
-                          layout_matrix = rbind(c(1, 2), c(3, 4)))
+    corr1 <- 
+    ggplot(data = cbind("Aleaf" = data$Aleaf[[1]], "GasEx_A" = data$ACi_data$GasEx_A, 
+                 "Ci_corrected" = data$Ci_corrected[[1]], "GasEx_Ci" = data$ACi_data$GasEx_Ci) %>% 
+           as_tibble()) + 
+      geom_point(aes(Ci_corrected, Aleaf), color = "blue") + 
+      geom_point(aes(GasEx_Ci, GasEx_A), color = "red") +
+      labs(title = "Raw (RED) vs Corrected (BLUE) A - Ci measures", subtitle = sample_name) + 
+      xlab("Ci") + ylab("A")
+    
+    raci1 <-
+    ggplot(data$Raci, aes(Ci, Photo)) + 
+      geom_point() +
+      labs(title = "Portion passed to plantecophys", subtitle = sample_name) + 
+      xlab("Ci") + ylab("A")
+    
+    # raci2 <- 
+    #   data$Raci %>% 
+    #   plantecophys::fitaci(., useRd=TRUE, Tcorrect=FALSE) %>% plot()
+
+#better place...
+  dir.create(file.path("figure"), showWarnings = FALSE)  
+  
+  png(paste0("figure/", sample_name, ".png"), pointsize = 10, height = 1500, width = 2000)
+    gridExtra::grid.arrange(empty1, empty2, empty3, corr1, raci1,
+                            layout_matrix = rbind(c(1,1,2,2,3,3), c(4,4,4,5,5,5)))
+
+  
   dev.off()
   
 }  
