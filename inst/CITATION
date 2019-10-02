@@ -1,0 +1,14 @@
+citHeader("To cite the RapidACi package, use the following information:")
+
+citEntry(
+entry="article",
+title = "Measuring Rapid A-Ci Curves in Boreal Conifers: Black Spruce and Balsam fir",
+year = "2019",
+author = c(person("Carole", "Coursolle"),
+           person("Guillaume", "Otis Prud'homme"),
+           person("Manuel", "Lamothe"),
+           person("Nathalie", "Isabel")),
+journal = "Frontiers in Plant Science",
+doi = "10.3389/fpls.2019.01276",
+textVersion = paste("Coursolle, C., Otis Prud'homme, G., Lamothe, M., and N. Isabel. 2019. Measuring Rapid A-Ci Curves in Boreal Conifers: Black Spruce and Balsam fir. Frontiers in Plant Science. doi: 10.3389/fpls.2019.01276")
+)

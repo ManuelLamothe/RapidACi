@@ -1,23 +1,35 @@
 Package: RapidACi
 Title: Automated Rapid A-Ci curve correction for Li-Cor system
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: 
     c(person(given = "Manuel",
            family = "Lamothe",
-           role = c("aut"),
+           role = c("aut", "cre"),
            email = "manuel.lamothe@canada.ca",
            comment = c(ORCID = "0000-0002-5947-533X")),
       person(given = "Guillaume",
            family = "Otis-Prud'homme",
-           role = c("aut", "cre"),
-           email = "guillaume.otisprudhomme@canada.ca"))
-Description: Functions to read, correct and analyse Rapid-A-Ci curve from Licor photosynthesis systems. The aim of the script is to automatize the correction phase either for one or many RACi curves. Empty chamber file is automatically chosen according to the match timestamp to ensure the correction of the corresponding measurement files. Correction can be apply from 1st to 5th polynomial as suggested by Stinziano et al. (2017) https://doi.org/10.1111/pce.12911.
+           role = c("aut"),
+           email = "Guillaume.Otis-Prud'Homme@mffp.gouv.qc.ca"),
+      person(given = "Carole",
+           family = "Coursolle",
+           role = c("ctb"),
+           email = "Guillaume.Otis-Prud'Homme@mffp.gouv.qc.ca"))
+Description: Functions to read, correct and analyse Rapid-A-Ci curve from Licor 
+    photosynthesis systems. The aim of the script is to automatize the 
+    correction phase either for one or many RACi curves. Empty chamber file is 
+    automatically chosen according to the match timestamp to ensure the 
+    correction of the corresponding measurement files. Correction can be apply 
+    from 1st to 5th polynomial as suggested by Stinziano et al. (2017) 
+    https://doi.org/10.1111/pce.12911.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
 Imports:
-    readxl,
-    tidyverse
+    tidyverse,
+    XLConnect,
+    gridExtra
 Suggests:
     plantecophys
+

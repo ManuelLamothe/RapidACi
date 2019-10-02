@@ -1,22 +1,27 @@
 #' extr_timestamps function
 #'
-#' @param list_files
-#' @param match_timestamp_column
+#' @param list_files Inherited argument from Rapid_aci_correction function
+#' @param timestamp_column Inherited argument from Rapid_aci_correction function 
 #'
-#' @return
-#'
-#' @examples
+#' @return Return file timestamp as read in Excel files produced by the LI-Cor portable
+#'   photosynthesis systems.
+
 
 extr_timestamps <- function(list_files,
-                            match_timestamp_column) {
+                            timestamp_column) {
 
-  timestamps <- .POSIXct(vector("character"))
-
-  for(file in list_files) {
-    suppressMessages(x <- readxl::read_excel(file, skip = 15, sheet = "Measurements"))
-    timestamps[file] <- strptime(as.character(x[1, match_timestamp_column]), "%s")
+  timestamps <- vector("character", length(list_files))
+  range <- paste0(timestamp_column, 17)
+  
+  for(i in 1:length(list_files)) {
+    suppressMessages(x <- readxl::read_excel(list_files[i], range = range, col_names = FALSE))
+    if(length(x) == 0) {
+      timestamps[i] <- NA
+    } else {
+      timestamps[i] <- round(x, digits = 0)
+    }
   }
-
-  return(timestamps)
+  
+  output <- unlist(timestamps)
+  return(output)
 }
-
