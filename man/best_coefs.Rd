@@ -4,7 +4,7 @@
 \alias{best_coefs}
 \title{best_coefs function}
 \usage{
-best_coefs(empty_file, leafArea_cm2, delta_max, skip_first, min_CO2,
+best_coefs(empty_file, leafArea_cm2 = NA, delta_max, skip_first, min_CO2,
   max_degree, diagnostic_plots)
 }
 \arguments{

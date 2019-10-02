@@ -12,17 +12,11 @@ best_fit <- function(data, max_degree) {
     stop("max_degree only takes integer values from 1 up to 5")
   }
 
-  x <- lm(GasEx_A ~ Meas_CO2_r, data)
-  y <- lm(GasEx_A ~ Meas_CO2_r + I(Meas_CO2_r^2), data)
-
-  suppressWarnings(
-  z1 <- lm(GasEx_A ~ Meas_CO2_r + I(Meas_CO2_r^2) + I(Meas_CO2_r^3), data))
-  suppressWarnings(
-  z2 <- lm(GasEx_A ~ Meas_CO2_r + I(Meas_CO2_r^2) + I(Meas_CO2_r^3) + I(Meas_CO2_r^4), 
-           data))
-  suppressWarnings(
-  z3 <- lm(GasEx_A ~ Meas_CO2_r + I(Meas_CO2_r^2) + I(Meas_CO2_r^3) + I(Meas_CO2_r^4) + 
-           I(Meas_CO2_r^5), data))
+  x  <- lm(GasEx_A ~ Meas_CO2_r, data)
+  y  <- lm(GasEx_A ~ poly(Meas_CO2_r, 2, raw = TRUE), data)
+  z1 <- lm(GasEx_A ~ poly(Meas_CO2_r, 3, raw = TRUE), data)
+  z2 <- lm(GasEx_A ~ poly(Meas_CO2_r, 4, raw = TRUE), data)
+  z3 <- lm(GasEx_A ~ poly(Meas_CO2_r, 5, raw = TRUE), data)
 
   bic <- c(BIC(x), BIC(y), BIC(z1), BIC(z2), BIC(z3))
   bic <- bic[1:max_degree]
