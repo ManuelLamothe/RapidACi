@@ -3,4 +3,5 @@
 export(Rapid_aci_correction)
 export(build_list)
 export(correct_dark)
+export(diagnose_sample)
 export(getFromExcel)

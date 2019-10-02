@@ -35,4 +35,5 @@ R/Graph modifi?.R
 
 # Test files
 data/*
+figure/*
 testfile.r

@@ -2,7 +2,7 @@
 % Please edit documentation in R/extr_leafArea_fct.r
 \name{extr_leafArea}
 \alias{extr_leafArea}
-\title{extr_timestamps function}
+\title{extr_leafArea function}
 \usage{
 extr_leafArea(WinSEEDLE_filepath)
 }
