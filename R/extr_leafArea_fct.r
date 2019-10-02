@@ -1,4 +1,4 @@
-#' extr_timestamps function
+#' extr_leafArea function
 #'
 #' @description Hidden function (for now) that could help build a data.frame of leaf
 #'   surface area by tree using the WinSEEDLE software

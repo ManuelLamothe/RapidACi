@@ -16,11 +16,9 @@ IMPORTANT: the actual version is not yet adapted for files produced by the LI640
 if(!require("devtools")) install.packages("devtools")    
 devtools::install_github("ManuelLamothe/RapidACi")     
 ```
-The package also needs the following packages: tidyverse, XLConnect, and plantecophys. 
+The package requires the _tidyverse_ and _XLConnect_ packages to work. The plantecophys package is recommended for the calculation of Vcmax and Jmax on the corrected values but is optional (another model could be prefered by the user)
 
 ```{r}
-if (!require("tidyverse")) install.packages("tidyverse"); library(tidyverse)
-if (!require("XLConnect")) install.packages("XLConnect"); library(XLConnect)
 if (!require("plantecophys")) install.packages("plantecophys"); library(plantecophys)
 ```
 
@@ -28,7 +26,7 @@ if (!require("plantecophys")) install.packages("plantecophys"); library(planteco
 
 ### First step: Generate a list of files
 
-- All measurements files (including empty and dark chamber measurements, when available) can be placed in a single folder. The file names must include a common part that identifies each **type of file** ("mpty", "fast", "slow", and "dark" are actual default R regex patterns that recognise empty chamber, RACiR A-Ci, standard A-Ci, and dark chamber measurements, respectively) and a **unique sample identifier** that can unambiguously be retrieved by a regex pattern (default recognises a sequence of 3 uppercase letters, followed by an underscore and 3 numbers). The build_list function will then generate a list of the files that are present in the folder and that can be used for the calculations.  
+- All measurement files (including empty and dark chamber measurements, when available) can be placed in a single folder. The file names must include a common part that identifies each **type of file** ("mpty", "fast", "slow", and "dark" are actual default R regex patterns that recognise empty chamber, RACiR A-Ci, standard A-Ci, and dark chamber measurements, respectively) and a **unique sample identifier** that can unambiguously be retrieved by a regex pattern (default recognises a sequence of 3 uppercase letters, followed by an underscore and 3 numbers). The build_list function will then generate a list of the files that are present in the folder and that can be used for the calculations.  
     
 - The empty chamber measurements files are paired to A-Ci measurement files automatically if an A-Ci and an empty chamber measurements are given the same 'match adjustment' during the measurements. Otherwise, the script will take the nearest starting time as timestamp to pair A-Ci and empty chamber measurements. (It is also possible to 'manually' modify a match by placing the same value in the 'Match Time' column (timestamp) of an Excel measurement file and its corresponding Empty chamber measurement file).
 
@@ -72,22 +70,18 @@ The plantecophys package by [Duursma (2015)](https://journals.plos.org/plosone/a
 ```{r}
 # Since not all samples can be analysed by plantecophys we recommand to launch the function with the *safely* function from the purrr package that produce a list of separated `result` and `error` without stopping the process
 
-X <- extr_aci(results) %>%
-     purrr::map(safely(~plantecophys::fitaci(., useRd=TRUE, Tcorrect=FALSE)))
+X <- map(results, `[[`, "Raci") %>%
+     map(safely(~plantecophys::fitaci(., useRd=TRUE, Tcorrect=FALSE)))
      
-# to generate plots
+# to generate the A-Ci plots
 map(X, "result") %>% compact() %>% walk(plot)     
 
 # to see errors
 map(X, "error") %>% compact() 
 
-# Vcmax-Jmax by samples
-Y <- map(X, "result") %>% compact()
-y <- names(Y)
 
-df <- cbind(sample_ID = as.character(lapply(y, rep, 3) %>% flatten()),
-            estimates = rep(c("Vcmax", "Jmax", "Rd"), length(Y)),
-            value     = do.call("rbind", map(Y, "pars")) %>% as_tibble())
+
+
 
 ```
 
@@ -99,6 +93,15 @@ results <- build_list() %>% Rapid_aci_correction()
 Raci    <- extr_aci(results) 
 ```
 
+# Vcmax-Jmax by samples
+Y <- map(X, "result") %>% compact()
+y <- names(Y)
+
+df <- cbind(sample_ID = as.character(lapply(y, rep, 3) %>% flatten()),
+            estimates = rep(c("Vcmax", "Jmax", "Rd"), length(Y)),
+            value     = do.call("rbind", map(Y, "pars")) %>% as_tibble())
+            
+for(i in names(results)) diagnose_sample(results, i, delta_max)
 ### Vcmax, Jmax table...
 
 identical(map(X, ~ .x$pars[1,1]), map2(X, "pars", c(2,1)))

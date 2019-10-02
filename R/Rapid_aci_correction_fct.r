@@ -161,7 +161,7 @@ Rapid_aci_correction <- function(list_files,
     
     lst[[i]]$Raci <- bind_cols(lst[[i]]$ACi_data, lst[[i]]$Aleaf, lst[[i]]$Ci_corrected) %>%
       select(Photo = V1, Ci = V2, Tleaf = Meas_Tleaf, PARi = Meas_Qamb_in, everything()) %>%
-      dplyr::filter(deltaA > 0 & deltaCi >= 0 & Ci >= 0) %>%
+      dplyr::filter(Photo > 0 & deltaA >= 0 & deltaCi >= 0 & Ci >= 0) %>%
       mutate(Rd = lst[[i]]$Rd)
   }
   

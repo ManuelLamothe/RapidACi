@@ -45,6 +45,7 @@ getFromExcel <- function(filepath,
              select(nmG[which(nmG %in% variables)])
   }
 
+  dataF <- drop_na(dataF, GasEx_A)
   xlcFreeMemory()  
   return(dataF)
 }
