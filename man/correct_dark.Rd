@@ -4,18 +4,22 @@
 \alias{correct_dark}
 \title{correct_dark function}
 \usage{
-correct_dark(darkfile_path, leafArea, LiCor_system)
+correct_dark(darkfile_path, leafArea_df, LiCor_system)
 }
 \arguments{
-\item{darkfile_path}{}
+\item{darkfile_path}{Path to a DARK file}
 
-\item{leafArea}{}
+\item{leafArea_df}{A dataframe containing at least a "sample_ID" column and a
+"leafArea_mm2" column (default = NULL)}
 
-\item{LiCor_system}{}
+\item{LiCor_system}{The model of Li-Cor portable photosynthesis system (either "LI6800"
+or "LI6400")}
 }
 \value{
-A subset dataframe with the variables given in arguments
+The single value of *Photo_out*
 }
 \description{
-correct_dark function
+Internal function to retrieve the *Photo_out* value measures in dark
+  chamber (with the correction for the leaf area if available). This function can be
+  used for both the LI6800 and LI6400 generated
 }
