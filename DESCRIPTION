@@ -1,6 +1,6 @@
 Package: RapidACi
 Title: Automated Rapid A-Ci curve correction for Li-Cor system
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: 
     c(person(given = "Manuel",
            family = "Lamothe",
@@ -27,6 +27,9 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
 Imports:
+    dplyr,
+    readxl,
+    lubridate,
     tidyverse,
     XLConnect,
     gridExtra

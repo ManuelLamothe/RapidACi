@@ -1,6 +1,8 @@
 #' best_fit function
+#' 
+#' @description Internal function to retrieve th
 #'
-#' @param data Data points to fit the 
+#' @param data Data points to regress
 #' @param max_degree Inherited argument from Rapid_aci_correction function
 #'
 #' @return The list of coefficients of the best fitted curve

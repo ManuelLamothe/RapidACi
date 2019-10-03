@@ -4,8 +4,7 @@
 \alias{best_coefs}
 \title{best_coefs function}
 \usage{
-best_coefs(empty_file, leafArea_cm2 = NA, delta_max, skip_first, min_CO2,
-  max_degree, diagnostic_plots)
+best_coefs(empty_file, leafArea_cm2 = NA, delta_max, max_degree)
 }
 \arguments{
 \item{empty_file}{Inherited argument from Rapid_aci_correction function}
@@ -14,17 +13,12 @@ best_coefs(empty_file, leafArea_cm2 = NA, delta_max, skip_first, min_CO2,
 
 \item{delta_max}{Inherited argument from Rapid_aci_correction function}
 
-\item{skip_first}{Inherited argument from Rapid_aci_correction function}
-
-\item{min_CO2}{Inherited argument from Rapid_aci_correction function}
-
 \item{max_degree}{Inherited argument from Rapid_aci_correction function}
-
-\item{diagnostic_plots}{Inherited argument from Rapid_aci_correction function}
 }
 \value{
-Coefficients from the best
+Data and coefficients from the best fitting polynomial
 }
 \description{
-best_coefs function
+Internal function to retrieve data from empty chamber measurement files
+  (section 1) and coefficients of the best fitting polynomial (section 2)
 }

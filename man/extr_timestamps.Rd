@@ -12,9 +12,9 @@ extr_timestamps(list_files, timestamp_column)
 \item{timestamp_column}{Inherited argument from Rapid_aci_correction function}
 }
 \value{
-Return file timestamp as read in Excel files produced by the LI-Cor portable
+Timestamp as read in Excel files produced by the LI-Cor portable
   photosynthesis systems.
 }
 \description{
-extr_timestamps function
+Internal function to extract timestamps from Li-Cor produced Excel files
 }

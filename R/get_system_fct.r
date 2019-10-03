@@ -1,9 +1,11 @@
 #' get_system function
 #'
-#' @param list_files
+#' @description Internal function to retrieve Li-Cor photosynthesis system model in Excel
+#'   files they produced
 #'
-#' @return Return the Li-Cor system model as read in the Excel files they produce. This
-#'   should be in cell D3 (6800) or B4 (6400).
+#' @param list_files Inherited parameter
+#'
+#' @return The Li-Cor system model. This should be in cell D3 (6800) or B4 (6400).
 
 
 get_system <- function(list_files) {

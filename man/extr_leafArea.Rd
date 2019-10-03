@@ -7,7 +7,7 @@
 extr_leafArea(WinSEEDLE_filepath)
 }
 \arguments{
-\item{winSEEDLE_filepath}{path for a winSEEDLE file (from the working directory)}
+\item{WinSEEDLE_filepath}{path for a winSEEDLE file (from the working directory)}
 }
 \value{
 tree_Id list with date and leaf area
@@ -15,14 +15,4 @@ tree_Id list with date and leaf area
 \description{
 Hidden function (for now) that could help build a data.frame of leaf
   surface area by tree using the WinSEEDLE software
-}
-\examples{
-\dontrun{
-# Merging multiple files
-leafArea_df <- NULL
-dir <-"data/WinSEEDLE/"
-list <- list.files(dir)
-for(file in list) leafArea_df <- rbind(leafArea_df, extr_leafArea(paste0(dir, file)))
-leafArea_df$sample_ID <- gsub("-", "_", leafArea_df$sample_ID)
-}
 }

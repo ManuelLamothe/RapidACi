@@ -7,12 +7,12 @@
 get_system(list_files)
 }
 \arguments{
-\item{list_files}{}
+\item{list_files}{Inherited parameter}
 }
 \value{
-Return the Li-Cor system model as read in the Excel files they produce. This
-  should be in cell D3 (6800) or B4 (6400).
+The Li-Cor system model. This should be in cell D3 (6800) or B4 (6400).
 }
 \description{
-get_system function
+Internal function to retrieve Li-Cor photosynthesis system model in Excel
+  files they produced
 }

@@ -1,22 +1,26 @@
-#' getFromExcel function
+#' get_fromExcel function
 #'
-#' @param filepath  Path to an Excel file produce by a Li-Cor system 6800
+#' @description This function allow the extraction of selected variables from an Excel file
+#'   produced by a Li-Cor portable photosynthesis system __LI6800__. If leaf area are
+#'   given, the data retrieved will be adjusted accordingly.
+#'   
+#' @param filepath  Path to an Excel file
 #' @param leafArea_cm2  Numeric value of the leaf area in the chamber (default = NA, i.e.
 #'   no correction is applied)
 #' @param variables The list of variables to retrieve from the file
 #' @param show.variables.names Logical argument to print the entire listof variable names
 #'   to console (default = FALSE)
 #'
-#' @return A subset dataframe with the variables given in arguments
+#' @return A dataframe with the variables given in arguments
 #'
 #' @export
 
-getFromExcel <- function(filepath, 
-                         leafArea_cm2 = NA,
-                         variables = c("GasEx_A", "GasEx_Ci", "GasEx_gtc", "GasEx_gsw",
-                                       "GasEx_TleafCnd","Meas_CO2_r", "Meas_Tleaf", 
-                                       "Meas_Tleaf2", "Meas_Qamb_in", "Const_S"),
-                         show.variables.names = FALSE) {
+get_fromExcel <- function(filepath, 
+                          leafArea_cm2 = NA,
+                          variables = c("GasEx_A", "GasEx_Ci", "GasEx_gtc", "GasEx_gsw",
+                                        "GasEx_TleafCnd","Meas_CO2_r", "Meas_Tleaf", 
+                                        "Meas_Tleaf2", "Meas_Qamb_in", "Const_S"),
+                          show.variables.names = FALSE) {
 
   wb <- XLConnect::loadWorkbook(filepath)
   nmB <- readWorksheet(wb, sheet = 1, startRow = 14, endRow = 14, header = FALSE) 
@@ -47,5 +51,6 @@ getFromExcel <- function(filepath,
 
   dataF <- drop_na(dataF, GasEx_A)
   xlcFreeMemory()  
+  
   return(dataF)
 }

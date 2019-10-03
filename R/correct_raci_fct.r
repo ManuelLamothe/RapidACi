@@ -1,5 +1,8 @@
 #' Correct_raci function
 #'
+#' @description Internal function to apply A and Ci corrections from the non-orthogonal
+#'   coefficients obtained on the matching empty chamber measures fitting polynomial .
+#'
 #' @param data The umpteenth element of the list under construction
 #' @param curve Portion of the curve to use (either "positive" or "negative")
 #'
@@ -7,9 +10,6 @@
 
 
 correct_raci <- function(data, curve) {
-
-#   if(curve == "positive") {x <- data$posCurve_coefs; y <- dplyr::filter(data$ACi_data, directn == "positive")}
-#   if(curve == "negative") {x <- data$negCurve_coefs; y <- dplyr::filter(data$ACi_data, directn == "negative")}
 
   if(curve == "positive") x <- data$posCurve_coefs
   if(curve == "negative") x <- data$negCurve_coefs

@@ -15,5 +15,6 @@ correct_raci(data, curve)
 The correction factor used, the A corrected (Aleaf) and the Ci corrected
 }
 \description{
-Correct_raci function
+Internal function to apply A and Ci corrections from the non-orthogonal
+  coefficients obtained on the matching empty chamber measures fitting polynomial .
 }
