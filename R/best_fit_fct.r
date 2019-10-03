@@ -1,11 +1,12 @@
 #' best_fit function
-#' 
-#' @description Internal function to retrieve th
+#'
+#' @description Internal function to retrieve coefficients of a fitting polynomial on
+#'   empty chamber measurements
 #'
 #' @param data Data points to regress
 #' @param max_degree Inherited argument from Rapid_aci_correction function
 #'
-#' @return The list of coefficients of the best fitted curve
+#' @return A vector of coefficients of the best fitted curve
 
 
 best_fit <- function(data, max_degree) {

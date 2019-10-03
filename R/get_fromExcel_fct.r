@@ -1,7 +1,7 @@
 #' get_fromExcel function
 #'
 #' @description This function allow the extraction of selected variables from an Excel file
-#'   produced by a Li-Cor portable photosynthesis system __LI6800__. If leaf area are
+#'   produced by a Li-Cor portable photosynthesis system LI6800. If leaf area are
 #'   given, the data retrieved will be adjusted accordingly.
 #'   
 #' @param filepath  Path to an Excel file

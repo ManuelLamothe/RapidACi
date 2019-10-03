@@ -1,6 +1,6 @@
 #' correct_dark function
 #'
-#' @description Internal function to retrieve the *Photo_out* value measures in dark
+#' @description Internal function to retrieve the "Photo_out" value measures in dark
 #'   chamber (with the correction for the leaf area if available). This function can be
 #'   used for both the LI6800 and LI6400 generated
 #'
@@ -10,7 +10,7 @@
 #' @param LiCor_system The model of Li-Cor portable photosynthesis system (either "LI6800"
 #'   or "LI6400")
 #'
-#' @return The single value of *Photo_out*
+#' @return The single value of "Photo_out"
 
 
 correct_dark <- function(darkfile_path, 

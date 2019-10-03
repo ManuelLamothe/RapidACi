@@ -1,11 +1,11 @@
 #' extr_leafArea function
 #'
-#' @description Hidden function (for now) that could help build a data.frame of leaf
-#'   surface area by tree using the WinSEEDLE software
+#' @description Hidden function. Retrieve a dataframe of leaf surface area by sample from
+#'   the WinSEEDLE software output files
 #'
 #' @param WinSEEDLE_filepath path for a winSEEDLE file (from the working directory)
 #'
-#' @return tree_Id list with date and leaf area
+#' @return A dataframe of sample_ID with date and leaf area
 
 extr_leafArea <- function(WinSEEDLE_filepath) {
   

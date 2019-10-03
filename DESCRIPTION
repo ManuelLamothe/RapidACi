@@ -10,11 +10,11 @@ Authors@R:
       person(given = "Guillaume",
            family = "Otis-Prud'homme",
            role = c("aut"),
-           email = "Guillaume.Otis-Prud'Homme@mffp.gouv.qc.ca"),
+           email = "guillaume.otis-prud'homme@mffp.gouv.qc.ca"),
       person(given = "Carole",
            family = "Coursolle",
            role = c("ctb"),
-           email = "Guillaume.Otis-Prud'Homme@mffp.gouv.qc.ca"))
+           email = "carole.coursolle@canada.ca"))
 Description: Functions to read, correct and analyse Rapid-A-Ci curve from Licor 
     photosynthesis systems. The aim of the script is to automatize the 
     correction phase either for one or many RACi curves. Empty chamber file is 

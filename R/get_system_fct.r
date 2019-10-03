@@ -1,7 +1,7 @@
 #' get_system function
 #'
-#' @description Internal function to retrieve Li-Cor photosynthesis system model in Excel
-#'   files they produced
+#' @description Internal function to retrieve Li-Cor portable photosynthesis system model
+#'   in Excel files they produced
 #'
 #' @param list_files Inherited parameter
 #'

@@ -1,7 +1,7 @@
 #' Correct_raci function
 #'
 #' @description Internal function to apply A and Ci corrections from the non-orthogonal
-#'   coefficients obtained on the matching empty chamber measures fitting polynomial .
+#'   coefficients obtained from the matching empty chamber measurements fitted polynomial.
 #'
 #' @param data The umpteenth element of the list under construction
 #' @param curve Portion of the curve to use (either "positive" or "negative")
