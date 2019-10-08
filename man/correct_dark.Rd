@@ -16,10 +16,10 @@ correct_dark(darkfile_path, leafArea_df, LiCor_system)
 or "LI6400")}
 }
 \value{
-The single value of *Photo_out*
+The single value of "Photo_out"
 }
 \description{
-Internal function to retrieve the *Photo_out* value measures in dark
+Internal function to retrieve the "Photo_out" value measures in dark
   chamber (with the correction for the leaf area if available). This function can be
   used for both the LI6800 and LI6400 generated
 }

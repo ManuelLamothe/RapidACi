@@ -13,6 +13,6 @@ get_system(list_files)
 The Li-Cor system model. This should be in cell D3 (6800) or B4 (6400).
 }
 \description{
-Internal function to retrieve Li-Cor photosynthesis system model in Excel
-  files they produced
+Internal function to retrieve Li-Cor portable photosynthesis system model
+  in Excel files they produced
 }

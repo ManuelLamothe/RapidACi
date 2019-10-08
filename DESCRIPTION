@@ -1,6 +1,6 @@
 Package: RapidACi
 Title: Automated Rapid A-Ci curve correction for Li-Cor system
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: 
     c(person(given = "Manuel",
            family = "Lamothe",

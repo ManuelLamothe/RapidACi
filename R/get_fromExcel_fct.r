@@ -26,8 +26,6 @@ get_fromExcel <- function(filepath,
   nmB <- readWorksheet(wb, sheet = 1, startRow = 14, endRow = 14, header = FALSE) 
   nmA <- readWorksheet(wb, sheet = 1, startRow = 15, endRow = 15, header = FALSE)
   nmG <- paste0(nmB, "_", nmA)
-  
-  if(show.variables.names) print(nmG)
 
   if (!is.na(leafArea_cm2)) { 
     writeWorksheet(wb, data = rep(leafArea_cm2, getLastRow(wb, sheet = 1)), sheet = 1, 
@@ -49,8 +47,11 @@ get_fromExcel <- function(filepath,
              select(nmG[which(nmG %in% variables)])
   }
 
-  dataF <- drop_na(dataF, GasEx_A)
-  xlcFreeMemory()  
+  if(show.variables.names) {
+    print(nmG); dataF <- GasEx_A <- NA
+  } else {  
+    dataF <- drop_na(dataF, GasEx_A); return(dataF)
+  }
   
-  return(dataF)
+  xlcFreeMemory()  
 }

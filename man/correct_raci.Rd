@@ -16,5 +16,5 @@ The correction factor used, the A corrected (Aleaf) and the Ci corrected
 }
 \description{
 Internal function to apply A and Ci corrections from the non-orthogonal
-  coefficients obtained on the matching empty chamber measures fitting polynomial .
+  coefficients obtained from the matching empty chamber measurements fitted polynomial.
 }

@@ -58,8 +58,11 @@ correct_dark <- function(darkfile_path,
                                    startCol = which(nmG == variables[1]), 
                                    endCol = which(nmG == variables[1]))
       }
-      Photo <- do.call(rbind, line) %>% as_tibble() %>% unnest(cols = c(V1, V2)) %>%
-               set_names(c("sample_ID", "Rd"))
+      
+      Photo <- do.call(rbind, line) %>% 
+        as_tibble(.name_repair = ~ c("sample_ID", "Rd")) %>% 
+        unnest(cols = c(sample_ID, Rd))
+      
       xlcFreeMemory()
       
     } else {
@@ -93,8 +96,10 @@ correct_dark <- function(darkfile_path,
                                       startCol = which(nmG == variables[1]), 
                                       endCol = which(nmG == variables[1]))
       }
-      Photo <- do.call(rbind, line) %>% as_tibble() %>% unnest(cols = c(V1, V2)) %>% 
-               set_names(c("sample_ID", "Rd"))
+      Photo <- do.call(rbind, line) %>% 
+               as_tibble(.name_repair = ~ c("sample_ID", "Rd")) %>% 
+               unnest(cols = c(sample_ID, Rd))
+      
       xlcFreeMemory()
     
     } else {

@@ -10,9 +10,9 @@ extr_leafArea(WinSEEDLE_filepath)
 \item{WinSEEDLE_filepath}{path for a winSEEDLE file (from the working directory)}
 }
 \value{
-tree_Id list with date and leaf area
+A dataframe of sample_ID with date and leaf area
 }
 \description{
-Hidden function (for now) that could help build a data.frame of leaf
-  surface area by tree using the WinSEEDLE software
+Hidden function. Retrieve a dataframe of leaf surface area by sample from
+  the WinSEEDLE software output files
 }

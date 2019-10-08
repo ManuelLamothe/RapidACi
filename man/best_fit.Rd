@@ -12,8 +12,9 @@ best_fit(data, max_degree)
 \item{max_degree}{Inherited argument from Rapid_aci_correction function}
 }
 \value{
-The list of coefficients of the best fitted curve
+A vector of coefficients of the best fitted curve
 }
 \description{
-Internal function to retrieve th
+Internal function to retrieve coefficients of a fitting polynomial on
+  empty chamber measurements
 }
