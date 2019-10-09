@@ -1,7 +1,7 @@
 #' extr_leafArea function
 #'
-#' @description Hidden function. Retrieve a dataframe of leaf surface area by sample from
-#'   the WinSEEDLE software output files
+#' @description Hidden function. Retrieves a dataframe of leaf surface area by sample from
+#'   WinSEEDLE software output files
 #'
 #' @param WinSEEDLE_filepath path for a winSEEDLE file (from the working directory)
 #'

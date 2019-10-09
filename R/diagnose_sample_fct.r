@@ -5,10 +5,10 @@
 #' @param delta_max delta_max as specified to obtain results from the Rapid_aci_correction
 #'   function
 #' @param priority_curve For the very specific case when coefficients are retrieved from
-#'   both the positive and the negative portions of the empty chamber A-Ci curve and you
-#'   want to use the coefficients from the shortest of both curve (default = "postive").
+#'   both up and down ramps of the empty chamber A-Ci curve and you want to use the
+#'   coefficients from the shortest of both curve (default = "postive").
 #'
-#' @return Several plots for diagnosing potential failure or problems
+#' @return Several plots for diagnosing potential failures or problems
 #' @export
 #'
 #' @note IN CONSTRUCTION

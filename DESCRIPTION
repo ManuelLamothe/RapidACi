@@ -16,11 +16,11 @@ Authors@R:
            role = c("ctb"),
            email = "carole.coursolle@canada.ca"))
 Description: Functions to read, correct and analyse Rapid-A-Ci curve from Licor 
-    photosynthesis systems. The aim of the script is to automatize the 
-    correction phase either for one or many RACi curves. Empty chamber file is 
-    automatically chosen according to the match timestamp to ensure the 
-    correction of the corresponding measurement files. Correction can be apply 
-    from 1st to 5th polynomial as suggested by Stinziano et al. (2017) 
+    photosynthesis systems. The aim of the script is to automate the 
+    correction phase either for one or many RACi curves. The empty chamber file used to 
+    correct a RACiR file is automatically chosen according to the match timestamp 
+    (closest to the RACiR curve being corrected). The correction factor is derived from 
+    the 1st to 5th polynomial as suggested by Stinziano et al. (2017).
     https://doi.org/10.1111/pce.12911.
 License: GPL-3
 Encoding: UTF-8

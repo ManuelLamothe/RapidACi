@@ -16,11 +16,11 @@ diagnose_sample(data, sample_name, delta_max = 0.05,
 function}
 
 \item{priority_curve}{For the very specific case when coefficients are retrieved from
-both the positive and the negative portions of the empty chamber A-Ci curve and you
-want to use the coefficients from the shortest of both curve (default = "postive").}
+both up and down ramps of the empty chamber A-Ci curve and you want to use the
+coefficients from the shortest of both curve (default = "postive").}
 }
 \value{
-Several plots for diagnosing potential failure or problems
+Several plots for diagnosing potential failures or problems
 }
 \description{
 diagnose_sample function

@@ -1,14 +1,14 @@
 #' best_coefs function
 #'
 #' @description Internal function to retrieve data from empty chamber measurement files
-#'   (section 1) and coefficients of the best fitting polynomial (section 2)
+#'   (section 1) and coefficients for the best fitting polynomial (section 2)
 #'
 #' @param empty_file Inherited argument from Rapid_aci_correction function
 #' @param leafArea_cm2 Leaf area in cm2
 #' @param delta_max Inherited argument from Rapid_aci_correction function
 #' @param max_degree Inherited argument from Rapid_aci_correction function
 #'
-#' @return Data and coefficients from the best fitting polynomial
+#' @return Data and coefficients for the best fitting polynomial
 
 best_coefs <- function(empty_file,
                        leafArea_cm2 = NA,

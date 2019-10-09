@@ -12,14 +12,14 @@ correct_dark(darkfile_path, leafArea_df, LiCor_system)
 \item{leafArea_df}{A dataframe containing at least a "sample_ID" column and a
 "leafArea_mm2" column (default = NULL)}
 
-\item{LiCor_system}{The model of Li-Cor portable photosynthesis system (either "LI6800"
-or "LI6400")}
+\item{LiCor_system}{The model of Li-Cor portable photosynthesis system (either
+"LI-6800" or "LI-6400")}
 }
 \value{
 The single value of "Photo_out"
 }
 \description{
-Internal function to retrieve the "Photo_out" value measures in dark
-  chamber (with the correction for the leaf area if available). This function can be
-  used for both the LI6800 and LI6400 generated
+Internal function used to retrieve the "Photo_out" value measured for the
+  dark chamber (with the correction for the leaf area if available). This function can
+  be used for both a LI-6800 and LI-6400 generated
 }

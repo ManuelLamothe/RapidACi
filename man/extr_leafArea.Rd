@@ -13,6 +13,6 @@ extr_leafArea(WinSEEDLE_filepath)
 A dataframe of sample_ID with date and leaf area
 }
 \description{
-Hidden function. Retrieve a dataframe of leaf surface area by sample from
-  the WinSEEDLE software output files
+Hidden function. Retrieves a dataframe of leaf surface area by sample from
+  WinSEEDLE software output files
 }

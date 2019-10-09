@@ -9,12 +9,14 @@ correct_raci(data, curve)
 \arguments{
 \item{data}{The umpteenth element of the list under construction}
 
-\item{curve}{Portion of the curve to use (either "positive" or "negative")}
+\item{curve}{Portion of the curve to use when there are both up (increasing [CO2]) and
+down (decreasing [CO2]) ramps (either "positive" or "negative")}
 }
 \value{
 The correction factor used, the A corrected (Aleaf) and the Ci corrected
 }
 \description{
-Internal function to apply A and Ci corrections from the non-orthogonal
-  coefficients obtained from the matching empty chamber measurements fitted polynomial.
+Internal function to correct A and Ci using the non-orthogonal
+  coefficients obtained from the polynomial fitted to the matching empty chamber
+  measurements.
 }

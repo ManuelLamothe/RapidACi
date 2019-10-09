@@ -1,15 +1,15 @@
 #' get_fromExcel function
 #'
-#' @description This function allow the extraction of selected variables from an Excel file
-#'   produced by a Li-Cor portable photosynthesis system LI6800. If leaf area are
-#'   given, the data retrieved will be adjusted accordingly.
-#'   
+#' @description This function allow the extraction of selected variables from an Excel
+#'   file produced by the Li-Cor portable photosynthesis system LI-6800. If leaf area is
+#'   provided, the data retrieved will be adjusted accordingly.
+#'
 #' @param filepath  Path to an Excel file
-#' @param leafArea_cm2  Numeric value of the leaf area in the chamber (default = NA, i.e.
-#'   no correction is applied)
+#' @param leafArea_cm2  Numeric value of the sample leaf area (default = NA, i.e. no
+#'   correction is applied)
 #' @param variables The list of variables to retrieve from the file
-#' @param show.variables.names Logical argument to print the entire listof variable names
-#'   to console (default = FALSE)
+#' @param show.variables.names Logical argument to print the entire list of variable names
+#'   to the console (default = FALSE)
 #'
 #' @return A dataframe with the variables given in arguments
 #'

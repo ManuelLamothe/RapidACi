@@ -16,9 +16,9 @@ best_coefs(empty_file, leafArea_cm2 = NA, delta_max, max_degree)
 \item{max_degree}{Inherited argument from Rapid_aci_correction function}
 }
 \value{
-Data and coefficients from the best fitting polynomial
+Data and coefficients for the best fitting polynomial
 }
 \description{
 Internal function to retrieve data from empty chamber measurement files
-  (section 1) and coefficients of the best fitting polynomial (section 2)
+  (section 1) and coefficients for the best fitting polynomial (section 2)
 }
