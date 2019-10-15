@@ -65,8 +65,10 @@ build_list <- function(path_to_licor_files = "data/",
       MATCH_type = NA,
       nearest = NA) %>%
     mutate(
-      START_time = ifelse(grepl("6400", LiCor_system) | grepl("DARK", chamber), NA, START_time),
-      timestamp  = ifelse(grepl("6400", LiCor_system) | grepl("DARK", chamber), NA, timestamp))
+      START_time = ifelse(grepl("6400", LiCor_system) | 
+                          grepl("DARK", chamber), NA, START_time),
+      timestamp  = ifelse(grepl("6400", LiCor_system) | 
+                          grepl("DARK", chamber), NA, timestamp))
   
   empty <- dplyr::filter(df, chamber == "EMPTY")
   fast  <- dplyr::filter(df, chamber == "FAST")
