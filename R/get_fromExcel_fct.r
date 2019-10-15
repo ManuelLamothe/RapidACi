@@ -47,11 +47,11 @@ get_fromExcel <- function(filepath,
              select(nmG[which(nmG %in% variables)])
   }
 
+  xlcFreeMemory()  
+  
   if(show.variables.names) {
     print(nmG); dataF <- GasEx_A <- NA
   } else {  
     dataF <- drop_na(dataF, GasEx_A); return(dataF)
   }
-  
-  xlcFreeMemory()  
 }

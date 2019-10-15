@@ -60,12 +60,13 @@ build_list <- function(path_to_licor_files = "data/",
                   rep("FAST",  length(lst_B)),
                   rep("SLOW",  length(lst_C)),
                   rep("DARK",  length(lst_D))), 
-      START_time = ifelse(grepl("6400", LiCor_system) == FALSE,
-                                extr_timestamps(lst, timestamp_column = "G"), NA),
-      timestamp = ifelse(grepl("6400", LiCor_system) == FALSE,
-                               extr_timestamps(lst, timestamp_column),  NA),
+      START_time = extr_timestamps(lst, timestamp_column = "G"),
+      timestamp =  extr_timestamps(lst, timestamp_column),
       MATCH_type = NA,
-      nearest = NA)
+      nearest = NA) %>%
+    mutate(
+      START_time = ifelse(grepl("6400", LiCor_system), NA, START_time),
+      timestamp  = ifelse(grepl("6400", LiCor_system) | grepl("DARK", chamber), NA, timestamp))
   
   empty <- dplyr::filter(df, chamber == "EMPTY")
   fast  <- dplyr::filter(df, chamber == "FAST")
