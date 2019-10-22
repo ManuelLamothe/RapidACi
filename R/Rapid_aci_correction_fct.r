@@ -109,6 +109,9 @@ Rapid_aci_correction <- function(list_files,
       lst[[j+i-1+z]]$empty_chamber_file <- empty_chamber$path
       lst[[j+i-1+z]]$empty_chamber_data <- xx[[1]]$empty_data
      #lst[[j+i-1+z]]$lag_between_curves <- xx[[1]]$lag
+      lst[[j+i-1+z]]$delta_max <- delta_max
+      lst[[j+i-1+z]]$max_degree <- max_degree
+      lst[[j+i-1+z]]$priority_curve <- priority_curve
       lst[[j+i-1+z]]$posCurve_coefs <- xx[[1]]$positive
       lst[[j+i-1+z]]$negCurve_coefs <- xx[[1]]$negative
     }

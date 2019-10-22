@@ -59,6 +59,11 @@ results <- Rapid_aci_correction(list_files,
                                 delta_max = 0.05, 
                                 max_degree = 3,
                                 priority_curve = "positive")
+
+```
+To produce a diagnostic figure for all the files in results (in the _figure/_ directory):      
+```{r}
+for(i in names(results)) diagnose_sample(results, i)
 ```
 
 ### 3. Calculate Vcmax and Jmax 
