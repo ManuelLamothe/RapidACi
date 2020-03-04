@@ -85,7 +85,7 @@ diagnose_sample <- function(data, sample_name) {
       theme_diagnose()
 
 
-  dir.create(file.path("figure"), showWarnings = FALSE)  
+  dir.create(file.path("diagnosefigure"), showWarnings = FALSE)  
   
   png(paste0("figure/", sample_name, ".png"), height = 1500, width = 2000)
   suppressWarnings(
