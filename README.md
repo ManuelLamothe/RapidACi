@@ -94,7 +94,9 @@ get_fromExcel(list_files$path[1], show.variables = TRUE)
 Y  <- map(X, "result") %>% map(`[[`, "pars") %>% compact()
 data.frame(sample_ID = names(Y),
            Vcmax = unlist(map(Y, `[[`, 1)) %>% as.vector(),
-           Jmax = unlist(map(Y, `[[`, 2)) %>% as.vector())
+           Jmax = unlist(map(Y, `[[`, 2)) %>% as.vector(),
+           Rd = unlist(map(Y, `[[`, 3)) %>% as.vector(),
+           GammaStar = map(X, "result") %>% map(`[[`, "GammaStar") %>% unlist() %>% as.vector())
                  
 # Extract plantecophys Photosyn results
 Z <- map(X, "result") %>% map(`[[`, "Photosyn") %>% compact()
