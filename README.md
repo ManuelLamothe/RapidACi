@@ -91,18 +91,24 @@ map(X, "error") %>% compact()
 get_fromExcel(list_files$path[1], show.variables = TRUE)
 
 # Wrapping things up for Vcmax and Jmax!
-Y  <- map(X, "result") %>% map(`[[`, "pars") %>% compact()
-data.frame(sample_ID = names(Y),
-           Vcmax = unlist(map(Y, `[[`, 1)) %>% as.vector(),
-           Jmax = unlist(map(Y, `[[`, 2)) %>% as.vector(),
-           Rd = unlist(map(Y, `[[`, 3)) %>% as.vector(),
-           GammaStar = map(X, "result") %>% map(`[[`, "GammaStar") %>% unlist() %>% as.vector())
+tmp <- map(X, "result") %>% map(`[[`, "pars") %>% compact()
+tmp <- tibble(
+         sample_ID = names(tmp),
+         Vcmax = unlist(map(tmp, `[[`, 1)) %>% as.vector(),
+         Jmax = unlist(map(tmp, `[[`, 2)) %>% as.vector(),
+         GammaStar = map(X, "result") %>% map(`[[`, "GammaStar") %>% unlist() %>% as.vector())
                  
-# Extract plantecophys Photosyn results
-Z <- map(X, "result") %>% map(`[[`, "Photosyn") %>% compact()
+# Extract compensation point (Cp) and other results from Photosyn function (plantecophys)
+Y <- map(X, "result") %>% map(`[[`, "Photosyn") %>% compact()
+Z <- map(X, "result") %>% map(`[[`, "Ci") %>% compact()
 photo_res <- vector("list", length(Z))
-for (i in 1:length(Z)) photo_res[[i]] <- bind_cols(sample_ID = names(Z)[i], Z[[i]]()) 
-plyr::ldply(photo_res)
+for (i in 1:length(Z)) photo_res[[i]] <- bind_cols(sample_ID = names(Z)[i], Cp = Z[[i]](0), Y[[i]]())
+photo_res <- plyr::ldply(photo_res) %>% 
+             left_join(tmp, by = "sample_ID") %>%
+             select(sample_ID, Vcmax, Jmax, GammaStar, Cp, everything())
+rm(tmp, Y, Z)
+
+photo_res
 
 # Save the results for R
 saveRDS(X, "some_name.rds")     #retrivable with: X <- readRDS("some_name.rds")
