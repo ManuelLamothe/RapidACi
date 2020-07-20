@@ -2,14 +2,15 @@
 #'
 #' @description This function allow the extraction of selected variables from an Excel
 #'   file produced by the Li-Cor portable photosynthesis system LI-6800. If leaf area is
-#'   provided, the data retrieved will be adjusted accordingly.
+#'   provided, the data retrieved will be adjusted accordingly after being recalculated.
 #'
-#' @param filepath  Path to an Excel file
-#' @param leafArea_cm2  Numeric value of the sample leaf area (default = NA, i.e. no
-#'   correction is applied)
-#' @param variables The list of variables to retrieve from the file
-#' @param show.variables.names Logical argument to print the entire list of variable names
-#'   to the console (default = FALSE)
+#' @param filepath  A path to a Li-Cor produced Excel file
+#' @param leafArea_cm2  Numeric value of the sample leaf area (default = NA, which means that no
+#'   correction will be applied)
+#' @param variables The list of variables to retrieve from the file#' 
+#' @param return Other than extracting a dataframe of the selected variables, the function can be
+#'   used to extract the index of the first line of data and variable index ("startpos") or the 
+#'   variable names present in a data file ("varnames") (default = "dataframe")
 #'
 #' @return A dataframe with the variables given in arguments
 #'
@@ -20,38 +21,49 @@ get_fromExcel <- function(filepath,
                           variables = c("GasEx_A", "GasEx_Ci", "GasEx_gtc", "GasEx_gsw",
                                         "GasEx_TleafCnd","Meas_CO2_r", "Meas_Tleaf", 
                                         "Meas_Tleaf2", "Meas_Qamb_in", "Const_S"),
-                          show.variables.names = FALSE) {
+                          return = "dataframe") {  #startpos, varnames
 
-  wb <- XLConnect::loadWorkbook(filepath)
-  nmB <- readWorksheet(wb, sheet = 1, startRow = 14, endRow = 14, header = FALSE) 
-  nmA <- readWorksheet(wb, sheet = 1, startRow = 15, endRow = 15, header = FALSE)
-  nmG <- paste0(nmB, "_", nmA)
-
-  if (!is.na(leafArea_cm2)) { 
-    writeWorksheet(wb, data = rep(leafArea_cm2, getLastRow(wb, sheet = 1)), sheet = 1, 
-                   startRow = 17, startCol = which(nmG == "Const_S"), header = FALSE)
+  wb   <- XLConnect::loadWorkbook(filepath)
   
-    setForceFormulaRecalculation(wb, sheet = 1, TRUE)    
+  row1 <- which(readWorksheet(wb, sheet = 1, startRow = 1, startCol = 1, endCol = 1, 
+                              header = FALSE, autofitRow = FALSE)  == 1)
+  varnames <- paste0(
+    readWorksheet(wb, sheet = 1, startRow = row1 - 3, endRow = row1 - 3, header = FALSE), "_",
+    readWorksheet(wb, sheet = 1, startRow = row1 - 2, endRow = row1 - 2, header = FALSE))
   
-    index <- which(nmG %in% variables)
-
-    dataF <- readWorksheet(wb, sheet = 1, startRow = 17, header = FALSE,
-                           startCol = min(index), endCol = max(index)) %>%
-             select(index - min(index) + 1) %>%
-             set_names(nmG[which(nmG %in% variables)])
-
-  } else {
+  if(return == "varnames") data <- varnames
   
-    dataF <- readWorksheet(wb, sheet = 1, startRow = 17, header = FALSE) %>%
-             set_names(nmG) %>%
-             select(nmG[which(nmG %in% variables)])
+  if(return == "startpos") {
+    
+    data <- c(row1, numeric(length(variables)))
+  
+    for(i in 1:length(variables)) {
+      data[i + 1] <- ifelse(identical(which(variables[i] %in% varnames), integer(0)), NA, 
+                        which(varnames == variables[i]))
+    }
   }
-
-  xlcFreeMemory()  
   
-  if(show.variables.names) {
-    print(nmG); dataF <- GasEx_A <- NA
-  } else {  
-    dataF <- drop_na(dataF, GasEx_A); return(dataF)
+  if(return == "dataframe") {  
+    
+    stopifnot("At least one variable not in file: check names using return = 'varnames' option" = 
+                sum(!variables %in% varnames) == 0)
+    
+    data <- data.frame()
+    
+    # Leaf area correction 
+    if (!is.na(leafArea_cm2)) { 
+      writeWorksheet(wb, data = rep(leafArea_cm2, getLastRow(wb, sheet = 1)), sheet = 1, 
+                     startRow = row1, startCol = which(varnames == "Const_S"), header = FALSE)
+  
+      setForceFormulaRecalculation(wb, sheet = 1, TRUE)    
+    }
+        
+    data <- readWorksheet(wb, sheet = 1, startRow = row1, header = FALSE) %>%
+            select(which(varnames %in% variables)) %>%
+            set_names(variables)
+    
+    xlcFreeMemory()  
   }
+  
+  return(data)
 }

@@ -7,25 +7,27 @@
 #' @param darkfile_path Path to a DARK file
 #' @param leafArea_df A dataframe containing at least a "sample_ID" column and a
 #'   "leafArea_mm2" column (default = NULL)
-#' @param LiCor_system The model of Li-Cor portable photosynthesis system (either
+#' @param LiCor_sys The model of Li-Cor portable photosynthesis system (either
 #'   "LI-6800" or "LI-6400")
+#' @param LiCor_osv 
 #'
 #' @return The single value of "Photo_out"
 
 
 correct_dark <- function(darkfile_path, 
                          leafArea_df,
-                         LiCor_system) {
+                         LiCor_sys,
+                         LiCor_osv) {
   
   wb <- XLConnect::loadWorkbook(darkfile_path)
   
-  if(grepl("6800", LiCor_system)){
+  if(grepl("6800", LiCor_sys)){
     nmB <- readWorksheet(wb, sheet = 1, startRow = 14, endRow = 14, header = FALSE) 
     nmA <- readWorksheet(wb, sheet = 1, startRow = 15, endRow = 15, header = FALSE)
     nmG <- paste0(nmB, "_", nmA)
     variables = c("GasEx_A", "Const_S")
     startRow = 17
-  } else if(grepl("6400", LiCor_system)){
+  } else if(grepl("6400", LiCor_sys)){
     nmB <- readWorksheet(wb, sheet = 1, startRow = 8, endRow = 8, header = FALSE) 
     nmA <- readWorksheet(wb, sheet = 1, startRow = 9, endRow = 9, header = FALSE)
     nmG <- paste0(nmB, "_", nmA)
@@ -33,12 +35,17 @@ correct_dark <- function(darkfile_path,
     startRow = 10
   }
   
-  if(grepl("6800", LiCor_system)){
-  message("##### Be careful, this function assumes the first UserDefVar column was used for sample_ID")
+ # Could be incomplete or incorrect for 6400 with newer os version
+  UserDef <- case_when(grepl("1.3", LiCor_osv) & grepl("6800", LiCor_sys) ~ "UserDefVar", 
+                       grepl("1.4", LiCor_osv) & grepl("6800", LiCor_sys) ~ "UserDefCon_Sample", 
+                       TRUE ~ "Tree #_in")
+    
+  if(grepl("6800", LiCor_sys)){
+ #   warning("This function assumes the first UserDefVar column was used for entering sample_ID")
   
     if(!is.null(leafArea_df)) {
-      y <- readWorksheet(wb, sheet = 1, startCol = grep("UserDefVar", nmG)[1], 
-                         header = FALSE,  endCol = grep("UserDefVar", nmG)[1],
+      y <- readWorksheet(wb, sheet = 1, startCol = grep(UserDef, nmG)[1], 
+                         header = FALSE,  endCol = grep(UserDef, nmG)[1],
                          startRow = startRow)
       z <- dplyr::filter(leafArea_df, sample_ID %in% y[,])
       
@@ -68,13 +75,13 @@ correct_dark <- function(darkfile_path,
     } else {
       Photo <- readWorksheet(wb, sheet = 1, header = FALSE,
                              startRow = startRow,
-                             startCol = grep("UserDefVar", nmG)[1], 
+                             startCol = grep(UserDef, nmG)[1], 
                              endCol = which(nmG == variables[1])) %>%
                select(1, length(.)) %>%
                set_names(c("sample_ID", "Rd"))
     }
 
-  } else if(grepl("6400", LiCor_system)){
+  } else if(grepl("6400", LiCor_sys)){
     
     if(!is.null(leafArea_df)) {
       y <- readWorksheet(wb, sheet = 1, startCol = 3, endCol = 3, startRow = startRow, header = FALSE)
